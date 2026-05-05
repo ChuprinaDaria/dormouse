@@ -1,0 +1,2184 @@
+{
+  "replacements": [
+    {
+      "from": "шо",
+      "to": "що",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "чо",
+      "to": "що",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "шось",
+      "to": "щось",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "чьо",
+      "to": "що",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "всьо",
+      "to": "все",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "щас",
+      "to": "зараз",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "сичас",
+      "to": "зараз",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "ваще",
+      "to": "взагалі",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "вааще",
+      "to": "взагалі",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "вапще",
+      "to": "взагалі",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "получається",
+      "to": "виходить",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "получилось",
+      "to": "вийшло",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "получити",
+      "to": "отримати",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "получив",
+      "to": "отримав",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "получила",
+      "to": "отримала",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "ладно",
+      "to": "добре",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "наверно",
+      "to": "мабуть",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "навєрно",
+      "to": "мабуть",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "навєрноє",
+      "to": "мабуть",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "канєшно",
+      "to": "звісно",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "конєшно",
+      "to": "звісно",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "конечно",
+      "to": "звісно",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "хорошо",
+      "to": "добре",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "пока",
+      "to": "бувай",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "давай",
+      "to": "гаразд",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "понял",
+      "to": "зрозумів",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "поняла",
+      "to": "зрозуміла",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "понятно",
+      "to": "зрозуміло",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "кстаті",
+      "to": "до речі",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "вмєсто",
+      "to": "замість",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "вмєсті",
+      "to": "разом",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "нада",
+      "to": "треба",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "нуна",
+      "to": "треба",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "надо",
+      "to": "треба",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "нєт",
+      "to": "ні",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "нєа",
+      "to": "ні",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "ага",
+      "to": "так",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "угу",
+      "to": "так",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "здєсь",
+      "to": "тут",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "сдєсь",
+      "to": "тут",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "вообщє",
+      "to": "взагалі",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "вобщем",
+      "to": "загалом",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "вобщому",
+      "to": "загалом",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "кажется",
+      "to": "здається",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "кажєтся",
+      "to": "здається",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "получше",
+      "to": "краще",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "побольше",
+      "to": "більше",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "поменьше",
+      "to": "менше",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "нікогда",
+      "to": "ніколи",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "всєгда",
+      "to": "завжди",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "іногда",
+      "to": "іноді",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "сколько",
+      "to": "скільки",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "дєшево",
+      "to": "дешево",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "помєняти",
+      "to": "замінити",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "поміняти",
+      "to": "замінити",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "предлагаю",
+      "to": "пропоную",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "прєдлагаю",
+      "to": "пропоную",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "ісправити",
+      "to": "виправити",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "ісправь",
+      "to": "виправ",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "проблєма",
+      "to": "проблема",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "рішити",
+      "to": "вирішити",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "рішіти",
+      "to": "вирішити",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "кароч",
+      "to": null,
+      "type": "filler",
+      "ngram": 1
+    },
+    {
+      "from": "карочє",
+      "to": null,
+      "type": "filler",
+      "ngram": 1
+    },
+    {
+      "from": "крч",
+      "to": null,
+      "type": "filler",
+      "ngram": 1
+    },
+    {
+      "from": "тіпа",
+      "to": null,
+      "type": "filler",
+      "ngram": 1
+    },
+    {
+      "from": "типа",
+      "to": null,
+      "type": "filler",
+      "ngram": 1
+    },
+    {
+      "from": "прям",
+      "to": null,
+      "type": "filler",
+      "ngram": 1
+    },
+    {
+      "from": "плз",
+      "to": null,
+      "type": "filler",
+      "ngram": 1
+    },
+    {
+      "from": "пліз",
+      "to": null,
+      "type": "filler",
+      "ngram": 1
+    },
+    {
+      "from": "лол",
+      "to": null,
+      "type": "filler",
+      "ngram": 1
+    },
+    {
+      "from": "ахах",
+      "to": null,
+      "type": "filler",
+      "ngram": 1
+    },
+    {
+      "from": "хаха",
+      "to": null,
+      "type": "filler",
+      "ngram": 1
+    },
+    {
+      "from": "азаза",
+      "to": null,
+      "type": "filler",
+      "ngram": 1
+    },
+    {
+      "from": "блін",
+      "to": null,
+      "type": "filler",
+      "ngram": 1
+    },
+    {
+      "from": "капець",
+      "to": null,
+      "type": "filler",
+      "ngram": 1
+    },
+    {
+      "from": "жесть",
+      "to": null,
+      "type": "filler",
+      "ngram": 1
+    },
+    {
+      "from": "пофікси",
+      "to": "виправ",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "пофіксь",
+      "to": "виправ",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "фікс",
+      "to": "виправлення",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "фіксить",
+      "to": "виправляти",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "норм",
+      "to": "нормально",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "інфа",
+      "to": "інформація",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "комп",
+      "to": "комп'ютер",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "прога",
+      "to": "програма",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "юзер",
+      "to": "користувач",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "юзай",
+      "to": "використовуй",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "юзати",
+      "to": "використовувати",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "баг",
+      "to": "помилка",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "баґ",
+      "to": "помилка",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "фіча",
+      "to": "функція",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "чекни",
+      "to": "перевір",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "чекай",
+      "to": "зачекай",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "хз",
+      "to": "не знаю",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "імхо",
+      "to": "на мою думку",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "кста",
+      "to": "до речі",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "дєпл",
+      "to": "розгортання",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "деплой",
+      "to": "розгортання",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "деплоїти",
+      "to": "розгортати",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "мерджити",
+      "to": "зливати",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "мьорджити",
+      "to": "зливати",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "пушити",
+      "to": "відправляти",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "пулити",
+      "to": "отримувати",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "ревʼюшити",
+      "to": "переглядати",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "рев'юшити",
+      "to": "переглядати",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "апдейт",
+      "to": "оновлення",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "апдейтнути",
+      "to": "оновити",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "тска",
+      "to": "задача",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "таска",
+      "to": "задача",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "тасочка",
+      "to": "задача",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "дедлайн",
+      "to": "крайній термін",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "мітинг",
+      "to": "зустріч",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "мітінг",
+      "to": "зустріч",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "колл",
+      "to": "дзвінок",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "кол",
+      "to": "дзвінок",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "фідбек",
+      "to": "відгук",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "фідбєк",
+      "to": "відгук",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "сетапити",
+      "to": "налаштовувати",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "сетап",
+      "to": "налаштування",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "зара",
+      "to": "зараз",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "по любому",
+      "to": "напевно",
+      "type": "surzhyk",
+      "ngram": 2
+    },
+    {
+      "from": "по ходу",
+      "to": "здається",
+      "type": "surzhyk",
+      "ngram": 2
+    },
+    {
+      "from": "корочє",
+      "to": null,
+      "type": "filler",
+      "ngram": 1
+    },
+    {
+      "from": "тупа",
+      "to": "просто",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "нормасно",
+      "to": "нормально",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "нормік",
+      "to": "нормально",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "нормальо",
+      "to": "нормально",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "якшо",
+      "to": "якщо",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "кєк",
+      "to": null,
+      "type": "filler",
+      "ngram": 1
+    },
+    {
+      "from": "кек",
+      "to": null,
+      "type": "filler",
+      "ngram": 1
+    },
+    {
+      "from": "получилося",
+      "to": "вийшло",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "получала",
+      "to": "отримувала",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "получаєш",
+      "to": "отримуєш",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "получаємо",
+      "to": "отримуємо",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "получають",
+      "to": "отримують",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "получаю",
+      "to": "отримую",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "нєльзя",
+      "to": "не можна",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "нельзя",
+      "to": "не можна",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "пожалуйста",
+      "to": "будь ласка",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "спасібо",
+      "to": "дякую",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "спасіба",
+      "to": "дякую",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "спасибо",
+      "to": "дякую",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "здрасті",
+      "to": "привіт",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "здрастє",
+      "to": "привіт",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "прівєт",
+      "to": "привіт",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "насколько",
+      "to": "наскільки",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "вєзді",
+      "to": "скрізь",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "вєздє",
+      "to": "скрізь",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "нікуда",
+      "to": "нікуди",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "откуда",
+      "to": "звідки",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "сюда",
+      "to": "сюди",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "туда",
+      "to": "туди",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "оттуда",
+      "to": "звідти",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "отсюда",
+      "to": "звідси",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "імєнно",
+      "to": "саме",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "імєно",
+      "to": "саме",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "дажє",
+      "to": "навіть",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "даже",
+      "to": "навіть",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "тожє",
+      "to": "також",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "тоже",
+      "to": "також",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "між прочім",
+      "to": "між іншим",
+      "type": "surzhyk",
+      "ngram": 2
+    },
+    {
+      "from": "воообще",
+      "to": "взагалі",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "вообще",
+      "to": "взагалі",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "правільно",
+      "to": "правильно",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "нєправільно",
+      "to": "неправильно",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "обязатєльно",
+      "to": "обовʼязково",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "січас",
+      "to": "зараз",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "прікольно",
+      "to": "класно",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "прікол",
+      "to": "жарт",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "прікольний",
+      "to": "класний",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "понімаю",
+      "to": "розумію",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "понімаєш",
+      "to": "розумієш",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "понімала",
+      "to": "розуміла",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "поняв",
+      "to": "зрозумів",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "отвєт",
+      "to": "відповідь",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "отвєчаю",
+      "to": "відповідаю",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "напрімєр",
+      "to": "наприклад",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "напрімер",
+      "to": "наприклад",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "напрікład",
+      "to": "наприклад",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "посмотрі",
+      "to": "подивись",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "посмотрєла",
+      "to": "подивилась",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "смотрю",
+      "to": "дивлюсь",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "смотрі",
+      "to": "дивись",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "дєлать",
+      "to": "робити",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "дєлай",
+      "to": "роби",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "дєлаю",
+      "to": "роблю",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "здєлати",
+      "to": "зробити",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "здєлай",
+      "to": "зроби",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "здєлала",
+      "to": "зробила",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "сдєлать",
+      "to": "зробити",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "расказати",
+      "to": "розказати",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "расказала",
+      "to": "розказала",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "разобратися",
+      "to": "розібратися",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "ваще-то",
+      "to": "взагалі-то",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "єщо",
+      "to": "ще",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "єщє",
+      "to": "ще",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "ещо",
+      "to": "ще",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "ещє",
+      "to": "ще",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "помойму",
+      "to": "по-моєму",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "по-моєму",
+      "to": "на мою думку",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "чуть-чуть",
+      "to": "трішки",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "чуть",
+      "to": "трохи",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "нємного",
+      "to": "трохи",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "немного",
+      "to": "трохи",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "много",
+      "to": "багато",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "хватіт",
+      "to": "досить",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "хватає",
+      "to": "вистачає",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "слишком",
+      "to": "занадто",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "слішком",
+      "to": "занадто",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "чєрєз",
+      "to": "через",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "прост",
+      "to": "просто",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "проста",
+      "to": "просто",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "конкрєтно",
+      "to": "конкретно",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "странно",
+      "to": "дивно",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "странний",
+      "to": "дивний",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "странна",
+      "to": "дивна",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "вмєсте",
+      "to": "разом",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "да",
+      "to": "так",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "нє",
+      "to": "ні",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "єто",
+      "to": "це",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "вот",
+      "to": "ось",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "если",
+      "to": "якщо",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "єслі",
+      "to": "якщо",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "когда",
+      "to": "коли",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "вроді",
+      "to": "наче",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "короч",
+      "to": null,
+      "type": "filler",
+      "ngram": 1
+    },
+    {
+      "from": "обов'язково",
+      "to": "обовʼязково",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "да ладно",
+      "to": "та годі",
+      "type": "surzhyk",
+      "ngram": 2
+    },
+    {
+      "from": "та ладно",
+      "to": "та годі",
+      "type": "surzhyk",
+      "ngram": 2
+    },
+    {
+      "from": "потому що",
+      "to": "тому що",
+      "type": "surzhyk",
+      "ngram": 2
+    },
+    {
+      "from": "потому шо",
+      "to": "тому що",
+      "type": "surzhyk",
+      "ngram": 2
+    },
+    {
+      "from": "как би",
+      "to": "ніби",
+      "type": "surzhyk",
+      "ngram": 2
+    },
+    {
+      "from": "как то",
+      "to": "якось",
+      "type": "surzhyk",
+      "ngram": 2
+    },
+    {
+      "from": "вроді би",
+      "to": "наче",
+      "type": "surzhyk",
+      "ngram": 2
+    },
+    {
+      "from": "нє ну",
+      "to": "ні ну",
+      "type": "surzhyk",
+      "ngram": 2
+    },
+    {
+      "from": "скільки коштує",
+      "to": "яка ціна",
+      "type": "compression",
+      "ngram": 2
+    },
+    {
+      "from": "но",
+      "to": "але",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "нічо",
+      "to": "нічого",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "ніфіга",
+      "to": "нічого",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "чьорт",
+      "to": "чорт",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "тіпо",
+      "to": "ніби",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "тіпу",
+      "to": "ніби",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "типу",
+      "to": "ніби",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "воопще",
+      "to": "взагалі",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "чот",
+      "to": "щось",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "збс",
+      "to": "добре",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "прогу",
+      "to": "програму",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "таску",
+      "to": "задачу",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "тасці",
+      "to": "задачі",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "баги",
+      "to": "помилки",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "баґи",
+      "to": "помилки",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "фічі",
+      "to": "функції",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "мітинги",
+      "to": "зустрічі",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "юзери",
+      "to": "користувачі",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "юзерів",
+      "to": "користувачів",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "декілька",
+      "to": "кілька",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "пару",
+      "to": "кілька",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "так як",
+      "to": "оскільки",
+      "type": "surzhyk",
+      "ngram": 2
+    },
+    {
+      "from": "таким чином",
+      "to": "отже",
+      "type": "surzhyk",
+      "ngram": 2
+    },
+    {
+      "from": "задачі",
+      "to": "завдання",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "в цілому",
+      "to": "загалом",
+      "type": "surzhyk",
+      "ngram": 2
+    },
+    {
+      "from": "занадто",
+      "to": "надто",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "вірно",
+      "to": "правильно",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "як тільки",
+      "to": "щойно",
+      "type": "surzhyk",
+      "ngram": 2
+    },
+    {
+      "from": "таким чином",
+      "to": "отже,",
+      "type": "surzhyk",
+      "ngram": 2
+    },
+    {
+      "from": "таким чином",
+      "to": "так",
+      "type": "surzhyk",
+      "ngram": 2
+    },
+    {
+      "from": "ващє",
+      "to": "взагалі",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "вапше",
+      "to": "взагалі",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "как",
+      "to": "як",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "такоє",
+      "to": "таке",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "короче",
+      "to": "коротше",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "тіп",
+      "to": "типу",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "ніт",
+      "to": "ні",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "сорі",
+      "to": "вибач",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "пофіг",
+      "to": "байдуже",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "пох",
+      "to": "байдуже",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "зашквар",
+      "to": "ганьба",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "зашкварне",
+      "to": "ганебне",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "зашкварно",
+      "to": "ганебно",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "бабло",
+      "to": "гроші",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "бабла",
+      "to": "грошей",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "юзає",
+      "to": "використовує",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "лайкнути",
+      "to": "вподобати",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "лайкнув",
+      "to": "вподобав",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "хавати",
+      "to": "їсти",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "хаває",
+      "to": "їсть",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "бухати",
+      "to": "пити",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "бухав",
+      "to": "пив",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "бухла",
+      "to": "алкоголь",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "бухло",
+      "to": "алкоголь",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "відос",
+      "to": "відео",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "кльово",
+      "to": "класно",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "батя",
+      "to": "батько",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "шара",
+      "to": "безкоштовно",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "шару",
+      "to": "безкоштовно",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "омг",
+      "to": "боже",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "хуй",
+      "to": "нічого",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "дохуя",
+      "to": "багато",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "дофіга",
+      "to": "багато",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "нахрін",
+      "to": "навіщо",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "нахіба",
+      "to": "навіщо",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "вау",
+      "to": null,
+      "type": "filler",
+      "ngram": 1
+    },
+    {
+      "from": "ого",
+      "to": null,
+      "type": "filler",
+      "ngram": 1
+    },
+    {
+      "from": "ооо",
+      "to": null,
+      "type": "filler",
+      "ngram": 1
+    },
+    {
+      "from": "ноу",
+      "to": "ні",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "рілі",
+      "to": "реально",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "чек",
+      "to": "перевір",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "фейк",
+      "to": "підробка",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "хейт",
+      "to": "ненависть",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "хейтер",
+      "to": "ненависник",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "рандом",
+      "to": "випадковий",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "рандомний",
+      "to": "випадковий",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "гуглити",
+      "to": "шукати",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "загуглив",
+      "to": "знайшов",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "загуглі",
+      "to": "пошукай",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "респект",
+      "to": "повага",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "ок",
+      "to": "добре",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "окей",
+      "to": "добре",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "плі",
+      "to": "будь ласка",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "плс",
+      "to": "будь ласка",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "тхнкс",
+      "to": "дякую",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "сенкс",
+      "to": "дякую",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "дякс",
+      "to": "дякую",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "дяк",
+      "to": "дякую",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "го",
+      "to": "давай",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "лан",
+      "to": "добре",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "ляп",
+      "to": "помилка",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "капєц",
+      "to": "кінець",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "капец",
+      "to": "кінець",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "чел",
+      "to": "хлопець",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "чела",
+      "to": "хлопця",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "на шару",
+      "to": "безкоштовно",
+      "type": "surzhyk",
+      "ngram": 2
+    },
+    {
+      "from": "по шарі",
+      "to": "безкоштовно",
+      "type": "surzhyk",
+      "ngram": 2
+    },
+    {
+      "from": "псіхую",
+      "to": "нервую",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "єсли",
+      "to": "якщо",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "брадяги",
+      "to": "друзі",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "чувак",
+      "to": "хлопець",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "чуваки",
+      "to": "хлопці",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "усьо",
+      "to": "все",
+      "type": "surzhyk",
+      "ngram": 1
+    },
+    {
+      "from": "нафіг",
+      "to": "навіщо",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "треш",
+      "to": "жах",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "скіпати",
+      "to": "пропускати",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "скіпнути",
+      "to": "пропустити",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "гоу",
+      "to": "давай",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "ту мач",
+      "to": "занадто",
+      "type": "slang",
+      "ngram": 2
+    },
+    {
+      "from": "залипнути",
+      "to": "зависнути",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "залипати",
+      "to": "зависати",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "задонатити",
+      "to": "пожертвувати",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "флексити",
+      "to": "хвалитись",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "хайп",
+      "to": "ажіотаж",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "хайповий",
+      "to": "популярний",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "офер",
+      "to": "пропозиція",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "грайнд",
+      "to": "впахування",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "флоп",
+      "to": "провал",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "стрем",
+      "to": "дивне",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "стремний",
+      "to": "дивний",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "кенселити",
+      "to": "бойкотувати",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "абьюз",
+      "to": "насильство",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "абьюзер",
+      "to": "кривдник",
+      "type": "slang",
+      "ngram": 1
+    },
+    {
+      "from": "абьюзивний",
+      "to": "насильницький",
+      "type": "slang",
+      "ngram": 1
+    }
+  ],
+  "patterns": [
+    {
+      "regex": "^ну\\s+",
+      "to": "",
+      "type": "filler",
+      "comment": "ну на початку речення"
+    },
+    {
+      "regex": "\\s+ну\\s+",
+      "to": " ",
+      "type": "filler",
+      "comment": "ну в середині речення"
+    },
+    {
+      "regex": "\\s{2,}",
+      "to": " ",
+      "type": "cleanup",
+      "comment": "подвійні пробіли"
+    }
+  ]
+}

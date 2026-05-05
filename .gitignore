@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.venv/
+.env
+*.db
+*.sqlite3
+.pytest_cache/
+.ruff_cache/
+*.egg
+.DS_Store
+notebooks/.ipynb_checkpoints/
+data/exports/*.jsonl
+data/exports/*.csv
+gemini.json
