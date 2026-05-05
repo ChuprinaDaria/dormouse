@@ -1,5 +1,11 @@
 # dormouse
 
+[![PyPI](https://img.shields.io/pypi/v/dormouse-ua?color=blue)](https://pypi.org/project/dormouse-ua/)
+[![Python](https://img.shields.io/pypi/pyversions/dormouse-ua)](https://pypi.org/project/dormouse-ua/)
+[![License](https://img.shields.io/github/license/ChuprinaDaria/dormouse)](LICENSE)
+[![CI](https://github.com/ChuprinaDaria/dormouse/actions/workflows/ci.yml/badge.svg)](https://github.com/ChuprinaDaria/dormouse/actions/workflows/ci.yml)
+[![HuggingFace](https://img.shields.io/badge/HuggingFace-model-yellow)](https://huggingface.co/Dariachup/dormouse)
+
 **Ukrainian text optimizer for LLMs** — fewer tokens, better comprehension.
 
 Normalizes surzhyk, slang, fillers, and maps to English for cloud LLMs. Saves 60-73% tokens while *improving* response quality.
