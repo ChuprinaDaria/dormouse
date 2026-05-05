@@ -189,6 +189,6 @@ MIT
 
 ---
 
-Built by [Daria Chuprina](https://www.linkedin.com/in/dchuprina/) because she pure.
+Built by [Daria Chuprina](https://www.linkedin.com/in/dchuprina/) because she can 👾.
 
 [Lazysoft](https://lazysoft.pl/) | [LinkedIn](https://www.linkedin.com/in/dchuprina/) | [daria@lazysoft.dev](mailto:daria@lazysoft.dev)
