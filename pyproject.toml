@@ -4,13 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "dormouse-ua"
-version = "0.3.1"
+version = "0.3.2"
 description = "Оптимізація українських текстів для LLM: менше токенів, краще розуміння"
 readme = "README.md"
 license = "MIT"
 requires-python = ">=3.11"
 authors = [
-    {name = "Daria Chuprina", email = "daria@lazysoft.dev"},
+    {name = "Daria Chuprina", email = "dchuprina@lazysoft.pl"},
 ]
 keywords = ["ukrainian", "nlp", "llm", "tokenization", "optimization"]
 classifiers = [
