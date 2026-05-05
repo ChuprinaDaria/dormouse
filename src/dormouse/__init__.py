@@ -38,7 +38,7 @@ def sniff(
 
 
 def DormouseClient(client, **kwargs):
-    """SDK wrapper для OpenAI (потребує pip install dormouse[middleware])."""
+    """Drop-in SDK wrapper для OpenAI та Anthropic. Автодетекція провайдера."""
     from dormouse.middleware import DormouseClient as _DormouseClient
 
     return _DormouseClient(client, **kwargs)
