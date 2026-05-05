@@ -14,7 +14,7 @@ VERSION = "0.3.0"
 _GITHUB_BASE = (
     "https://github.com/ChuprinaDaria/dormouse/releases/download/v{version}"
 )
-_HF_BASE = "https://huggingface.co/ChuprinaDaria/dormouse/resolve/main"
+_HF_BASE = "https://huggingface.co/Dariachup/dormouse/resolve/main"
 
 _DEFAULT_CACHE = Path("~/.cache/dormouse").expanduser()
 
@@ -39,8 +39,11 @@ def _download(url: str, dest: Path) -> bool:
         dest.parent.mkdir(parents=True, exist_ok=True)
         tmp = dest.with_suffix(".tmp")
 
-        req = urllib.request.Request(url, headers={"User-Agent": "dormouse/" + VERSION})
-        with urllib.request.urlopen(req, timeout=60) as resp:
+        req = urllib.request.Request(url, headers={
+            "User-Agent": "dormouse/" + VERSION,
+            "Accept": "application/octet-stream",
+        })
+        with urllib.request.urlopen(req, timeout=120) as resp:
             total = int(resp.headers.get("Content-Length", 0))
             downloaded = 0
             block = 64 * 1024
