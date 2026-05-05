@@ -136,6 +136,8 @@ No other tool specifically optimizes Ukrainian for LLMs.
 
 **Batch processing** — 10K comments through GPT for sentiment analysis. Squeeze first → cheaper and faster.
 
+**Local search & classification (no API needed)** — `stir/mumble/sip` work fully offline. Index PDF/Excel/TXT, search by meaning, classify by topics — all on CPU with local embeddings (MiniLM-L12-v2). No cloud, no keys, no cost.
+
 ## Eval details
 
 Full evaluation ran for 4 days on 53,351 texts:
