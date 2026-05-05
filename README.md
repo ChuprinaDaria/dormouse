@@ -56,12 +56,14 @@ graph LR
 
 ```bash
 pip install dormouse-ua
+```
 
-# With morphological analysis (recommended)
-pip install dormouse-ua[morph]
+Includes: squeeze, middleware (OpenAI/Anthropic), nibble, morphology, Excel parsing.
 
-# Everything
-pip install dormouse-ua[all]
+For embeddings search (`stir/mumble/sip`) and seq2seq — needs PyTorch:
+```bash
+pip install dormouse-ua[ml]      # + torch, sentence-transformers
+pip install dormouse-ua[all]     # everything
 ```
 
 ## Quick start
