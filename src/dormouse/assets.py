@@ -81,12 +81,13 @@ def _download(url: str, dest: Path) -> bool:
 
 
 def get_asset(name: str) -> Path:
-    """Повертає шлях до asset файлу. Завантажує якщо нема в кеші.
+    """Повертає шлях до asset файлу.
 
     Порядок пошуку:
     1. DORMOUSE_DATA_DIR (dev mode)
-    2. Cache (~/.cache/dormouse/v{version}/)
-    3. Download: GitHub Releases → HuggingFace fallback
+    2. Bundled в пакеті (src/dormouse/data/)
+    3. Cache (~/.cache/dormouse/v{version}/)
+    4. Download: GitHub Releases → HuggingFace fallback
 
     Raises:
         FileNotFoundError: Якщо файл не знайдено і download невдалий.
@@ -94,7 +95,6 @@ def get_asset(name: str) -> Path:
     # Dev mode — пряме посилання на локальні дані
     dev = _data_dir()
     if dev:
-        # Шукаємо в різних піддиректоріях dev dir
         candidates = [
             dev / "db" / name,
             dev / name,
@@ -103,6 +103,11 @@ def get_asset(name: str) -> Path:
         for p in candidates:
             if p.exists():
                 return p
+
+    # Bundled в пакеті
+    bundled = Path(__file__).parent / "data" / name
+    if bundled.exists():
+        return bundled
 
     # Cache
     cache = _cache_dir()

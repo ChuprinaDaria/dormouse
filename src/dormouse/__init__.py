@@ -1,6 +1,6 @@
 """dormouse — оптимізація українських текстів для LLM."""
 
-__version__ = "0.3.4"
+__version__ = "0.4.0"
 
 from dormouse.optimizer import SqueezedText, squeeze, squeeze_batch
 

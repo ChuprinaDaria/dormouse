@@ -113,22 +113,31 @@ dormouse mumble "головний герой"
 
 ## Comparison with alternatives
 
-| Tool | Ukrainian | Token savings | Approach | Quality impact |
-|------|:---------:|:------------:|----------|:--------------:|
-| **dormouse** | native | **73%** | normalize + compress + translate | **+50% quality** |
-| [LLMLingua](https://github.com/microsoft/LLMLingua) | no | up to 20x | ML perplexity pruning (GPT-2/LLaMA) | -5-15% |
-| [Selective Context](https://github.com/liyucheng09/Selective_Context) | no | 40-50% | self-information filtering | -10-20% |
-| [token-reducer](https://pypi.org/project/token-reducer/) | no | 50-75% | 6-stage pipeline, AST for code | neutral |
-| [shrink-prompt](https://pypi.org/project/shrink-prompt/) | no | 30-70% | domain-specific rules (<20ms) | neutral |
-| Google Translate → EN | partial | 30-40% | full translation | variable |
+### Head-to-head: dormouse vs LLMLingua (same 20 prompts, GPT-4.1-nano judge)
 
-**Why dormouse is different:**
+| Method | Tokens | Savings | Quality |
+|--------|-------:|:-------:|:-------:|
+| Original UA | 1,312 | — | 4.65/5 |
+| **dormouse** | 620 | **53%** | **4.50/5** |
+| [LLMLingua](https://github.com/microsoft/LLMLingua) (on UA) | 1,182 | 10% | 4.60/5 |
+| dormouse + LLMLingua | 595 | 55% | 4.60/5 |
+
+LLMLingua achieves only **10% savings on Ukrainian** — its GPT-2 perplexity model doesn't understand Cyrillic. dormouse gives **5x more compression** on the same texts.
+
+### Why dormouse is different
 
 The problem: Ukrainian Cyrillic costs [3-4x more tokens](https://www.frontiersin.org/journals/artificial-intelligence/articles/10.3389/frai.2025.1538165/full) than equivalent English text in GPT-4/Claude.
 
-All existing tools (LLMLingua, Selective Context, token-reducer) compress *already English* text by removing information. dormouse solves the problem one level earlier — transforms expensive Ukrainian (3-4 tokens/word) into cheap English (1-1.5 tokens/word) while **preserving all meaning**.
+| Tool | Ukrainian | Savings (on UA texts) | Approach |
+|------|:---------:|:---------------------:|----------|
+| **dormouse** | native | **53%** (tested) | normalize + compress + translate |
+| [LLMLingua](https://github.com/microsoft/LLMLingua) | no | 10% (tested) | ML perplexity pruning |
+| [Selective Context](https://github.com/liyucheng09/Selective_Context) | no | ~10-15%* | self-information filtering |
+| [token-reducer](https://pypi.org/project/token-reducer/) | no | ~10-15%* | 6-stage pipeline |
 
-No other tool specifically optimizes Ukrainian for LLMs.
+*\*Estimated — these tools use similar English-trained models, expected to perform comparably to LLMLingua on Cyrillic.*
+
+All existing compression tools work on *already English* text. dormouse solves the problem one level earlier — transforms expensive Ukrainian (3-4 tokens/word) into cheap English (1-1.5 tokens/word) while preserving meaning. No other tool specifically optimizes Ukrainian for LLMs.
 
 ## Use cases
 

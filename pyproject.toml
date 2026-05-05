@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "dormouse-ua"
-version = "0.3.4"
+version = "0.4.0"
 description = "Оптимізація українських текстів для LLM: менше токенів, краще розуміння"
 readme = "README.md"
 license = "MIT"
@@ -83,7 +83,7 @@ Issues = "https://github.com/ChuprinaDaria/dormouse/issues"
 where = ["src"]
 
 [tool.setuptools.package-data]
-dormouse = ["data/*.json"]
+dormouse = ["data/*.json", "data/*.pt", "data/*.db"]
 
 [tool.ruff]
 target-version = "py311"
