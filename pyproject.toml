@@ -3,7 +3,7 @@ requires = ["setuptools>=68.0", "setuptools-scm>=8.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "dormouse"
+name = "dormouse-ua"
 version = "0.3.0"
 description = "Оптимізація українських текстів для LLM: менше токенів, краще розуміння"
 readme = "README.md"
