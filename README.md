@@ -1,3 +1,7 @@
+<div align="center">
+
+<img src="assets/mouse.png" width="200" alt="dormouse">
+
 # dormouse
 
 [![PyPI](https://img.shields.io/pypi/v/dormouse-ua?color=blue)](https://pypi.org/project/dormouse-ua/)
@@ -7,6 +11,8 @@
 [![HuggingFace](https://img.shields.io/badge/HuggingFace-model-yellow)](https://huggingface.co/Dariachup/dormouse)
 
 **Ukrainian text optimizer for LLMs** — fewer tokens, better comprehension.
+
+</div>
 
 Normalizes surzhyk, slang, fillers, and maps to English for cloud LLMs. Saves 60-73% tokens while *improving* response quality.
 
@@ -58,6 +64,8 @@ graph LR
 pip install dormouse-ua
 ```
 
+Package is 29MB — everything included: 47K lexicon, seq2seq model (7.3M params), 360 normalization rules. Deliberately bundled instead of lazy-loading from HuggingFace — because internet can be slow, HuggingFace can have its own plans, and `pip install` should just work on the first try. A slightly larger package beats a CDN dependency.
+
 Includes: squeeze, middleware (OpenAI/Anthropic), nibble, morphology, Excel parsing.
 
 For embeddings search (`stir/mumble/sip`) and seq2seq — needs PyTorch:
@@ -71,31 +79,26 @@ pip install dormouse-ua[all]     # everything
 ```python
 from dormouse import squeeze
 
-# Normalize only (layers 1+2)
-squeeze("шо там по баґу, пофікси плз")
-# → "що там по помилці, виправ"
-
-# Cloud mode — compress for Claude/GPT (layers 1+2+3)
 squeeze("ваще нормально, канєшно зробимо", target="cloud")
 # → "generally ok, sure do"
 ```
 
-### SDK Middleware (drop-in)
+Or as a drop-in middleware for OpenAI/Anthropic SDK:
 
 ```python
 from openai import OpenAI
 from dormouse import DormouseClient
 
-client = DormouseClient(OpenAI())  # or Anthropic()
+client = DormouseClient(OpenAI())
 
 response = client.chat.completions.create(
     model="gpt-4o-mini",
     messages=[{"role": "user", "content": "шо там по деплою, він ваще не робе"}],
 )
-# Prompt: squeeze → EN → GPT → unsqueeze → Ukrainian response
+# Under the hood: squeeze → EN → GPT → unsqueeze → Ukrainian response
 ```
 
-### Semantic search
+Bonus — `stir`, `mumble`, `sip` for semantic search, classification and RAG, fully local on CPU. No API, no keys, no cost (requires `[ml]`):
 
 ```python
 from dormouse import stir, mumble, sip
