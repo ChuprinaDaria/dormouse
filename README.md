@@ -156,15 +156,28 @@ Stir/mumble: 8,441 chunks indexed, search ~600ms
 Sip classification: 99% texts classified (8 topics)
 ```
 
+### Quality preservation (100 real prompts, automated scoring 1-5)
+
+| Model | UA score | Squeezed EN | Preservation |
+|-------|:--------:|:-----------:|:------------:|
+| **GPT-4.1** | 4.79 | **4.86** | **102%** |
+| GPT-4.1-mini | 4.71 | 4.68 | 99% |
+| GPT-4o-mini | 4.61 | 4.60 | 100% |
+| GPT-4.1-nano | 4.58 | 4.56 | 100% |
+| GPT-5.5 | 4.00 | 4.00 | 100% |
+| Gemini 2.0 Flash | 4.11 | 4.10 | 100% |
+
+> Squeeze preserves 99-102% quality across all cloud models. GPT-4.1 actually performs **better** on squeezed text.
+
 ### HF Inference API (small models)
 
-| Model | UA score | Squeezed EN score | Delta |
-|-------|:--------:|:-----------------:|:-----:|
+| Model | UA score | Squeezed EN | Delta |
+|-------|:--------:|:-----------:|:-----:|
 | Qwen2.5-72B | 4.9/5 | 4.5/5 | -0.4 |
 | Qwen2.5-7B | 4.4/5 | 3.6/5 | -0.8 |
 | Llama-3.2-1B | 2.7/5 | 2.8/5 | +0.1 |
 
-> Squeeze works great for cloud models (GPT, Claude, 70B+). For small models (<7B), use `brew()` with native Ukrainian — they understand UA better than squeezed EN.
+> For small models (<7B), use `brew()` with native Ukrainian — they understand UA better than squeezed EN.
 
 ## Architecture
 
