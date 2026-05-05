@@ -7,6 +7,7 @@
 import os
 import sys
 import urllib.request
+from importlib.resources import files
 from pathlib import Path
 
 VERSION = "0.3.0"
@@ -81,13 +82,12 @@ def _download(url: str, dest: Path) -> bool:
 
 
 def get_asset(name: str) -> Path:
-    """Повертає шлях до asset файлу.
+    """Повертає шлях до asset файлу. Завантажує якщо нема в кеші.
 
     Порядок пошуку:
     1. DORMOUSE_DATA_DIR (dev mode)
-    2. Bundled в пакеті (src/dormouse/data/)
-    3. Cache (~/.cache/dormouse/v{version}/)
-    4. Download: GitHub Releases → HuggingFace fallback
+    2. Cache (~/.cache/dormouse/v{version}/)
+    3. Download: GitHub Releases → HuggingFace fallback
 
     Raises:
         FileNotFoundError: Якщо файл не знайдено і download невдалий.
@@ -95,6 +95,7 @@ def get_asset(name: str) -> Path:
     # Dev mode — пряме посилання на локальні дані
     dev = _data_dir()
     if dev:
+        # Шукаємо в різних піддиректоріях dev dir
         candidates = [
             dev / "db" / name,
             dev / name,
@@ -104,10 +105,14 @@ def get_asset(name: str) -> Path:
             if p.exists():
                 return p
 
-    # Bundled в пакеті
-    bundled = Path(__file__).parent / "data" / name
-    if bundled.exists():
-        return bundled
+    # Bundled package data (бандлені файли в dormouse/data/)
+    try:
+        pkg_file = files("dormouse.data").joinpath(name)
+        pkg_path = Path(str(pkg_file))
+        if pkg_path.exists():
+            return pkg_path
+    except (TypeError, FileNotFoundError):
+        pass
 
     # Cache
     cache = _cache_dir()
