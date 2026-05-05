@@ -61,7 +61,7 @@ anthropic-middleware = [
     "anthropic>=0.40",
 ]
 all = [
-    "dormouse[morph,tokens,embeddings,compress,translate,ml,style,search,middleware,anthropic-middleware]",
+    "dormouse-ua[morph,tokens,embeddings,compress,translate,ml,style,search,middleware,anthropic-middleware]",
 ]
 dev = [
     "pytest>=8.0",
@@ -74,6 +74,9 @@ dormouse = "dormouse.cli:main"
 
 [project.urls]
 Homepage = "https://github.com/ChuprinaDaria/dormouse"
+Documentation = "https://github.com/ChuprinaDaria/dormouse#readme"
+Repository = "https://github.com/ChuprinaDaria/dormouse"
+Issues = "https://github.com/ChuprinaDaria/dormouse/issues"
 
 [tool.setuptools.packages.find]
 where = ["src"]

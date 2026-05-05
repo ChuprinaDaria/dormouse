@@ -49,13 +49,13 @@ graph LR
 ## Install
 
 ```bash
-pip install dormouse
+pip install dormouse-ua
 
 # With morphological analysis (recommended)
-pip install dormouse[morph]
+pip install dormouse-ua[morph]
 
 # Everything
-pip install dormouse[all]
+pip install dormouse-ua[all]
 ```
 
 ## Quick start
@@ -186,3 +186,9 @@ DORMOUSE_DATA_DIR=./data pytest tests/ -v
 ## License
 
 MIT
+
+---
+
+Built by [Daria Chuprina](https://www.linkedin.com/in/dchuprina/) because she pure.
+
+[Lazysoft](https://lazysoft.pl/) | [LinkedIn](https://www.linkedin.com/in/dchuprina/) | [daria@lazysoft.dev](mailto:daria@lazysoft.dev)
