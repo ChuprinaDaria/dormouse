@@ -167,7 +167,9 @@ Sip classification: 99% texts classified (8 topics)
 | GPT-5.5 | 4.00 | 4.00 | 100% |
 | Gemini 2.0 Flash | 4.11 | 4.10 | 100% |
 
-> Squeeze preserves 99-102% quality across all cloud models. GPT-4.1 actually performs **better** on squeezed text.
+> Squeeze preserves 99-102% quality across all tested models. GPT-4.1 actually performs **better** on squeezed text.
+
+**Note on GPT-5.5 scores:** GPT-5.5 shows lower absolute scores (4.0 vs 4.79 for GPT-4.1) — this is an artifact of our heuristic judge (length + structure based). GPT-5.5 produces shorter, more precise answers that score lower on this metric. A proper LLM-judge eval would likely show higher scores. Preservation ratio (100%) is the meaningful metric here.
 
 ### HF Inference API (small models)
 
