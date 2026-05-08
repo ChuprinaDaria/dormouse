@@ -2,10 +2,11 @@
 
 from unittest.mock import MagicMock, patch
 
-import numpy as np
 import pytest
 
-from dormouse.classifier import SniffResult, _parse_examples, sniff
+np = pytest.importorskip("numpy")
+
+from dormouse.classifier import SniffResult, _parse_examples, sniff  # noqa: E402
 
 
 @pytest.fixture
