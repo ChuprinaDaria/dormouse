@@ -95,6 +95,26 @@ response = client.chat.completions.create(
 # Prompt: squeeze → EN → GPT → unsqueeze → Ukrainian response
 ```
 
+### Classification (no API needed)
+
+```python
+from dormouse import sniff
+
+results = sniff(
+    ["Борщ український", "Чізкейк Нью-Йорк", "Лимонад"],
+    {
+        "Гарячі страви": "борщ суп юшка харчо крем-суп гуляш",
+        "Десерти": "торт чізкейк еклер фондан мус",
+        "Напої": "сік морс лимонад компот узвар",
+    }
+)
+# → [SniffResult("Борщ український", "Гарячі страви", 0.43),
+#    SniffResult("Чізкейк Нью-Йорк", "Десерти", 0.45),
+#    SniffResult("Лимонад", "Напої", 0.49)]
+```
+
+Example-based classification: provide examples per category instead of just names. Uses MiniLM-L12-v2 embeddings, no API calls. Also accepts `list[str]` for simple name-based classification.
+
 ### Semantic search
 
 ```python
@@ -199,6 +219,7 @@ src/dormouse/
 ├── optimizer.py       — squeeze() main pipeline
 ├── rule_engine.py     — normalization (360 rules + pymorphy3)
 ├── compressor.py      — filler/noise removal
+├── classifier.py     — sniff() embeddings-based classification
 ├── mapper.py          — UA→EN via lexicon + lemma + transliteration
 ├── seq2seq.py         — expression translator (GRU encoder-decoder)
 ├── teapot.py          — stir/mumble/sip/brew (search + LLM)

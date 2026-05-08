@@ -42,17 +42,42 @@ def _cosine_similarity(a: np.ndarray, b: np.ndarray) -> np.ndarray:
     return a_norm @ b_norm.T
 
 
+def _parse_examples(categories: dict[str, str | list[str]]) -> tuple[list[str], list[list[str]]]:
+    """Парсить приклади з dict категорій.
+
+    Returns:
+        (cat_names, list_of_example_lists)
+    """
+    cat_names = list(categories.keys())
+    cat_examples: list[list[str]] = []
+
+    for name in cat_names:
+        examples = categories[name]
+        if isinstance(examples, str):
+            examples = [e.strip() for e in examples.split(",") if e.strip()]
+            # Якщо одна строка без ком — split по пробілах
+            if len(examples) == 1 and " " in examples[0]:
+                examples = examples[0].split()
+        cat_examples.append(examples)
+
+    return cat_names, cat_examples
+
+
 def sniff(
     items: list[str],
-    categories: list[str],
+    categories: list[str] | dict[str, str | list[str]],
     squeeze_first: bool = False,
 ) -> list[SniffResult]:
     """Класифікує тексти по категоріях через embeddings.
 
     Args:
         items: Тексти для класифікації.
-        categories: Список категорій.
-        optimize_first: Оптимізувати тексти перед класифікацією.
+        categories: Категорії. Два формати:
+            - list[str] — назви категорій (cosine до назви).
+            - dict[str, str | list[str]] — приклади для кожної категорії.
+              Значення: список прикладів або рядок через кому/пробіли.
+              Приклад: {"Напої": "сік морс лимонад компот", "Десерти": ["торт", "чізкейк"]}
+        squeeze_first: Оптимізувати тексти перед класифікацією.
 
     Returns:
         Список SniffResult.
@@ -72,10 +97,42 @@ def sniff(
             "Встанови: pip install dormouse[embeddings]"
         )
 
-    # Кодуємо все разом для ефективності
     item_embeddings = model.encode(items)
-    cat_embeddings = model.encode(categories)
 
+    # Example-based: mean cosine до кожного прикладу
+    if isinstance(categories, dict):
+        cat_names, cat_examples = _parse_examples(categories)
+
+        # Encode всі приклади одним батчем
+        all_examples = [ex for examples in cat_examples for ex in examples]
+        all_example_embs = model.encode(all_examples)
+
+        # Розрізаємо назад по категоріях
+        cat_emb_groups: list[np.ndarray] = []
+        offset = 0
+        for examples in cat_examples:
+            cat_emb_groups.append(all_example_embs[offset:offset + len(examples)])
+            offset += len(examples)
+
+        results = []
+        for i, item in enumerate(items):
+            best_cat = 0
+            best_score = -1.0
+            for c, embs in enumerate(cat_emb_groups):
+                sims = _cosine_similarity(item_embeddings[i], embs).flatten()
+                score = float(np.mean(sims))
+                if score > best_score:
+                    best_score = score
+                    best_cat = c
+            results.append(SniffResult(
+                text=item,
+                category=cat_names[best_cat],
+                confidence=best_score,
+            ))
+        return results
+
+    # List-based: cosine до назви категорії (backward compatible)
+    cat_embeddings = model.encode(categories)
     results = []
     for i, item in enumerate(items):
         sims = _cosine_similarity(

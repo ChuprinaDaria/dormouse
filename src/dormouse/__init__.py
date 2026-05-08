@@ -1,6 +1,6 @@
 """dormouse — оптимізація українських текстів для LLM."""
 
-__version__ = "0.4.2"
+__version__ = "0.4.3"
 
 from dormouse.optimizer import SqueezedText, squeeze, squeeze_batch
 
@@ -28,10 +28,15 @@ def nibble_batch(texts: list[str]):
 
 def sniff(
     items: list[str],
-    categories: list[str],
+    categories: list[str] | dict[str, str | list[str]],
     squeeze_first: bool = False,
 ):
-    """Класифікація через embeddings (потребує pip install dormouse[embeddings])."""
+    """Класифікація через embeddings (потребує pip install dormouse[embeddings]).
+
+    categories може бути:
+        - list[str] — назви категорій (cosine до назви)
+        - dict — приклади: {"Напої": "сік морс лимонад", "Десерти": ["торт", "чізкейк"]}
+    """
     from dormouse.classifier import sniff as _sniff
 
     return _sniff(items, categories, squeeze_first=squeeze_first)
