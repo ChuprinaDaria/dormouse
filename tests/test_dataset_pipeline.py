@@ -168,6 +168,58 @@ class TestCorrupt:
         assert dirty_variant("qwerty asdf", inverse, random.Random(1)) is None
 
 
+class TestCorruptor:
+    CFG = {
+        "min_ops": 1,
+        "ops": {
+            "rule_inversion": {"p": 1.0, "max_per_sentence": 2},
+            "typo_neighbor": {"p": 0.1},
+            "char_drop": {"p": 0.1},
+            "translit_word": {"p": 0.05},
+            "filler_insert": {"p": 0.5, "max": 1},
+            "intensifier_insert": {"p": 0.3},
+        },
+    }
+
+    def _corruptor(self, seed=7):
+        from dataset_lib.corrupt import Corruptor
+
+        return Corruptor(self.CFG, random.Random(seed))
+
+    def test_deterministic_by_seed(self):
+        text = "що там взагалі відбувається з цим завданням"
+        r1 = self._corruptor(5).corrupt(text)
+        r2 = self._corruptor(5).corrupt(text)
+        assert r1 == r2
+
+    def test_corruption_changes_text(self):
+        result = self._corruptor().corrupt("що там взагалі відбувається")
+        assert result is not None
+        dirty, ops = result
+        assert dirty != "що там взагалі відбувається"
+        assert ops
+
+    def test_min_ops_returns_none(self):
+        from dataset_lib.corrupt import Corruptor
+
+        cfg = {"min_ops": 1, "ops": {op: {"p": 0.0} for op in self.CFG["ops"]}}
+        assert Corruptor(cfg, random.Random(1)).corrupt("чисте речення тут") is None
+
+    def test_keyboard_neighbors_symmetric(self):
+        from dataset_lib.corrupt import KEYBOARD_NEIGHBORS
+
+        for ch, neighbors in KEYBOARD_NEIGHBORS.items():
+            for n in neighbors:
+                assert ch in KEYBOARD_NEIGHBORS[n], f"{ch}<->{n} не симетричні"
+
+    def test_null_fillers_loaded(self):
+        from dataset_lib.corrupt import null_fillers
+
+        fillers = null_fillers()
+        assert fillers
+        assert all(isinstance(f, str) and f for f in fillers)
+
+
 class TestHash:
     def test_sha256_stable(self):
         assert sha256_text("текст") == sha256_text("текст")
