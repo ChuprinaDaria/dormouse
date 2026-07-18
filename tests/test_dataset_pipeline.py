@@ -1,0 +1,174 @@
+"""Тести dataset-пайплайну (scripts/dataset_lib). CI-safe: без даних і мережі."""
+
+import random
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).parent.parent / "scripts"))
+
+from dataset_lib.align import extract_windows  # noqa: E402
+from dataset_lib.compose import strict_map_to_en, target_ok  # noqa: E402
+from dataset_lib.corrupt import build_inverse_rules, dirty_variant  # noqa: E402
+from dataset_lib.filters import passes_filters  # noqa: E402
+from dataset_lib.io import sha256_text  # noqa: E402
+from dataset_lib.normalize import is_ukrainian, normalize  # noqa: E402
+
+
+class TestNormalize:
+    def test_nfc_and_spaces(self):
+        assert normalize("слово   слово\n\nще") == "слово слово ще"
+
+    def test_apostrophe_folding(self):
+        # U+2019 і U+02BC → U+0027 (як у crack_open)
+        assert normalize("комп’ютер") == "комп'ютер"
+        assert normalize("компʼютер") == "комп'ютер"
+
+    def test_idempotent(self):
+        text = normalize("  комп’ютер   працює  ")
+        assert normalize(text) == text
+
+
+class TestIsUkrainian:
+    def test_ukrainian(self):
+        assert is_ukrainian("це українське речення з літерою ї")
+
+    def test_russian_rejected(self):
+        assert not is_ukrainian("это русский текст с буквой ы и э")
+
+    def test_latin_rejected(self):
+        assert not is_ukrainian("this is english text")
+
+    def test_empty_rejected(self):
+        assert not is_ukrainian("")
+
+
+class TestFilters:
+    def test_identical_dropped(self):
+        ok, reason = passes_filters("текст", "текст", set(), "h1")
+        assert not ok and reason == "identical"
+
+    def test_too_long_dropped(self):
+        long = "слово " * 200
+        ok, reason = passes_filters(long, "текст", set(), "h1")
+        assert not ok and reason == "too_long"
+
+    def test_duplicate_dropped(self):
+        ok, reason = passes_filters("брудний текст", "чистий текст", {"h1"}, "h1")
+        assert not ok and reason == "duplicate"
+
+    def test_frozen_dropped(self):
+        ok, reason = passes_filters("брудний текст", "чистий текст", set(), "h1", {"h1"})
+        assert not ok and reason == "frozen"
+
+    def test_good_pair_passes(self):
+        ok, reason = passes_filters("шо там по багу", "що там з багом", set(), "h1")
+        assert ok and reason == ""
+
+
+class TestAlign:
+    def test_single_edit_window(self):
+        dirty = "вчора ми ходили в кіно і бачили шось цікаве там ввечері"
+        clean = "вчора ми ходили в кіно і бачили щось цікаве там ввечері"
+        windows = extract_windows(dirty, clean)
+        assert ("бачили шось цікаве", "бачили щось цікаве") in windows
+
+    def test_short_pair_whole(self):
+        windows = extract_windows("шо там", "що там")
+        assert ("шо там", "що там") in windows
+
+    def test_windows_capped_at_max_n(self):
+        dirty = "а б в г д е ж з" + " зовсім інший текст повністю"
+        for w_dirty, _ in extract_windows(dirty, "інша послідовність слів тут"):
+            assert len(w_dirty.split()) <= 4
+
+    def test_no_edits_no_windows(self):
+        long_same = "одне і те саме речення без жодних змін узагалі тут"
+        assert extract_windows(long_same, long_same) == []
+
+
+class TestCompose:
+    def _conn(self, tmp_path):
+        from dormouse.lexicon_db import get_lexicon
+
+        conn = get_lexicon(tmp_path / "lex.db")
+        rows = [
+            ("помилка", "error", 1),
+            ("виправити", "fix", 1),
+            ("треба", "need", 1),
+            ("як справи", "how?", 2),
+        ]
+        for word, en, ngram in rows:
+            conn.execute(
+                "INSERT INTO lexicon (word, normalized, en_compressed, ngram) "
+                "VALUES (?, NULL, ?, ?)",
+                (word, en, ngram),
+            )
+        conn.commit()
+        return conn
+
+    def test_word_lookup(self, tmp_path):
+        conn = self._conn(tmp_path)
+        assert strict_map_to_en("треба виправити", conn) == "need fix"
+
+    def test_expression_lookup(self, tmp_path):
+        conn = self._conn(tmp_path)
+        assert strict_map_to_en("як справи", conn) == "how?"
+
+    def test_lemma_fallback(self, tmp_path):
+        conn = self._conn(tmp_path)
+        # "помилку" немає, лема "помилка" є
+        assert strict_map_to_en("виправити помилку", conn) == "fix error"
+
+    def test_unknown_word_returns_none(self, tmp_path):
+        conn = self._conn(tmp_path)
+        assert strict_map_to_en("треба надзвичайнослово", conn) is None
+
+    def test_no_translit_garbage(self, tmp_path):
+        conn = self._conn(tmp_path)
+        assert strict_map_to_en("бозна-що", conn) is None
+
+
+class TestTargetOk:
+    def test_good_target(self):
+        assert target_ok("шо там по багу", "bug status?")
+
+    def test_cyrillic_target_rejected(self):
+        assert not target_ok("шо там", "що там")
+
+    def test_too_long_target_rejected(self):
+        assert not target_ok("шо там", "a b c d e f")
+
+    def test_empty_rejected(self):
+        assert not target_ok("шо там", None)
+        assert not target_ok("шо там", "")
+
+
+class TestCorrupt:
+    def test_inverse_rules_from_bundled_json(self):
+        inverse = build_inverse_rules()
+        assert "що" in inverse
+        assert set(inverse["що"]) >= {"шо", "чо"}
+        assert all(variants for variants in inverse.values())
+
+    def test_no_null_targets(self):
+        inverse = build_inverse_rules()
+        assert None not in inverse
+        assert "" not in inverse
+
+    def test_dirty_variant_deterministic(self):
+        inverse = build_inverse_rules()
+        text = "що там взагалі відбувається"
+        v1 = dirty_variant(text, inverse, random.Random(7))
+        v2 = dirty_variant(text, inverse, random.Random(7))
+        assert v1 == v2
+        assert v1 is not None and v1 != text
+
+    def test_dirty_variant_none_when_no_candidates(self):
+        inverse = build_inverse_rules()
+        assert dirty_variant("qwerty asdf", inverse, random.Random(1)) is None
+
+
+class TestHash:
+    def test_sha256_stable(self):
+        assert sha256_text("текст") == sha256_text("текст")
+        assert sha256_text("текст") != sha256_text("інший")
