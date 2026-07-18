@@ -196,6 +196,27 @@ src/dormouse/
 | `scripts/eval_hf.py` | Евалуація з HF Inference API |
 | `scripts/fill_gaps.py` | Автозаповнення прогалин лексикону |
 
+## Датасет-пайплайн seq2seq (у публічному репо, з 0.4.4+)
+
+Повний runbook: `scripts/README.md`. Версії: `DATA_REVISIONS.md`.
+
+- **Layer A** `data/pairs/*.jsonl` — `{"dirty","clean","source","license"}` (UA↔UA)
+- **Layer B** `data/train/*.jsonl` — `{"src","tgt",...}`, tgt = стислий EN з чистої
+  сторони через `crack_open → compress → строгий лексикон-маппінг` (без транслиту)
+- Джерела: UA-GEC (pip, бандлений), OmniGEC (HF, локально), Brown-UK (GitHub,
+  локально), синтетика (`scripts/synth_corrupt.py` — інверсія 360 правил + ЙЦУКЕН
+  typos + інжекція філерів), лексикон (`scripts/generate_expression_pairs.py`)
+- **Frozen eval**: `data/eval/frozen_v1.jsonl` (1499 пар, НЕЗМІННИЙ, закомічений)
+  + `frozen_v1.hashes.txt` — виключення з трейну назавжди. Базлайн 0.4.2:
+  exact_match 24.7% (lexicon 33.3%, ua_gec 0.7%) — `data/eval/baseline_v0.4.2.json`
+- Гейт релізу: загальний EM ≥ базлайну, lexicon-страта −1 п.п. max
+- PII-скраб (`src/dormouse/pii.py`) обов'язковий до запису пар на диск
+- Трен: `scripts/train_expressions.py` — чекпоінти в деплойному форматі
+  (короткі ключі + self-verify через `wake_up_expr`), `training_run.json` з
+  хешами даних і конфігів
+- Колектор пар з деплойментів: `collector/` (FastAPI, поза pip-пакетом)
+- Асети без GitHub/HF: `scripts/fetch_assets.py` (з wheel dormouse-ua==0.4.2)
+
 ## Тестування
 
 ```bash
