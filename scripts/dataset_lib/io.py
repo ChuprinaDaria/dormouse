@@ -18,6 +18,14 @@ CHECKPOINTS_DIR = DATA_DIR / "checkpoints"
 ASSETS_DIR = DATA_DIR / "assets"
 
 MANIFEST_PATH = RAW_DIR / "MANIFEST.md"
+FROZEN_HASHES_PATH = EVAL_DIR / "frozen_v1.hashes.txt"
+
+
+def load_frozen_hashes() -> set[str]:
+    """Хеші src заморожених eval-пар — виключаються з трейну назавжди."""
+    if FROZEN_HASHES_PATH.exists():
+        return set(FROZEN_HASHES_PATH.read_text().split())
+    return set()
 
 
 def read_jsonl(path: Path) -> Iterator[dict]:

@@ -23,7 +23,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from dataset_lib.compose import target_ok  # noqa: E402
 from dataset_lib.corrupt import build_inverse_rules, dirty_variant  # noqa: E402
-from dataset_lib.io import TRAIN_DIR, write_jsonl  # noqa: E402
+from dataset_lib.io import TRAIN_DIR, load_frozen_hashes, sha256_text, write_jsonl  # noqa: E402
 
 from dormouse.lexicon_db import get_lexicon  # noqa: E402
 from dormouse.morphology import get_morph  # noqa: E402
@@ -60,6 +60,7 @@ def main() -> None:
     rng = random.Random(args.seed)
     conn = get_lexicon()
     inverse = build_inverse_rules()
+    frozen = load_frozen_hashes()
 
     rows = conn.execute(
         "SELECT word, en_compressed, ngram FROM lexicon "
@@ -68,12 +69,15 @@ def main() -> None:
 
     records = []
     seen: set[str] = set()
-    stats = {"base": 0, "dirty_variants": 0, "inflected": 0, "gate_rejected": 0}
+    stats = {"base": 0, "dirty_variants": 0, "inflected": 0, "gate_rejected": 0, "frozen": 0}
 
     def add(src: str, tgt: str, kind: str) -> None:
         src = src.lower().strip()
         tgt = tgt.lower().strip()
         if src in seen:
+            return
+        if sha256_text(src) in frozen:
+            stats["frozen"] += 1
             return
         if not target_ok(src, tgt):
             stats["gate_rejected"] += 1

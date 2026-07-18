@@ -25,23 +25,15 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from dataset_lib.align import extract_windows  # noqa: E402
 from dataset_lib.compose import compose_en, target_ok  # noqa: E402
 from dataset_lib.io import (  # noqa: E402
-    EVAL_DIR,
     PAIRS_DIR,
     TRAIN_DIR,
+    load_frozen_hashes,
     read_jsonl,
     sha256_text,
     write_jsonl,
 )
 
 from dormouse.lexicon_db import get_lexicon  # noqa: E402
-
-FROZEN_HASHES_PATH = EVAL_DIR / "frozen_v1.hashes.txt"
-
-
-def load_frozen_hashes() -> set[str]:
-    if FROZEN_HASHES_PATH.exists():
-        return set(FROZEN_HASHES_PATH.read_text().split())
-    return set()
 
 
 def compose_source(source: str, conn, frozen: set[str]) -> dict:

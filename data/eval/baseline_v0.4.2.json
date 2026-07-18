@@ -1,0 +1,28 @@
+{
+  "model": {
+    "label": "assets-v0.4.2",
+    "checkpoint_sha256": "920a2229170c7313e1990facf4fa0a8bf09ca6d78c5c476033bee1b4da385352"
+  },
+  "eval_set": {
+    "path": "/home/user/dormouse/data/eval/frozen_v1.jsonl",
+    "sha256": "0853690a2c269b1d94b24b0f08171ab26107b454ba331f8020d084ac33ea44cb",
+    "n": 1499
+  },
+  "metrics": {
+    "exact_match": 0.2468,
+    "latin_ok_rate": 1.0,
+    "none_rate": 0.0,
+    "token_savings_pct": 75.22,
+    "per_source": {
+      "lexicon": {
+        "n": 1101,
+        "exact_match": 0.3333
+      },
+      "ua_gec": {
+        "n": 398,
+        "exact_match": 0.0075
+      }
+    }
+  },
+  "created_at": "2026-07-18"
+}
