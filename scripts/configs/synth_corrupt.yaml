@@ -1,0 +1,37 @@
+# Config for scripts/synth_corrupt.py — synthetic corruption of clean Ukrainian
+# sentences into (dirty, clean) pairs. Kept next to the generated data for
+# reproducibility (a copy is written to the output's .meta.json sidecar).
+seed: 42
+max_pairs: 20000
+min_ops: 1                 # drop sentences where no corruption was applied
+min_sentence_words: 2
+max_sentence_words: 24
+
+# Plain-text inputs, one sentence per line. Weights control sampling share.
+inputs:
+  - path: data/raw/clean_sentences/ua_gec_clean.txt
+    weight: 0.5
+  - path: data/raw/clean_sentences/brown_uk.txt      # produced by download_brown_uk.py (run locally)
+    weight: 0.3
+  - path: data/raw/clean_sentences/ubertext_social.txt   # produced by download_ubertext.py (run locally)
+    weight: 0.2
+
+# Corruption operations. p is per-sentence (rule_inversion, filler_insert,
+# intensifier_insert) or per-word (typo_neighbor, char_drop, translit_word).
+ops:
+  rule_inversion:
+    p: 0.5
+    max_per_sentence: 2
+  typo_neighbor:
+    p: 0.06
+  char_drop:
+    p: 0.04
+  translit_word:
+    p: 0.03
+  filler_insert:
+    p: 0.3
+    max: 1
+  intensifier_insert:
+    p: 0.2
+
+output: data/pairs/synth.jsonl

@@ -1,0 +1,46 @@
+# Training mix for scripts/train_expressions.py. Versioned: every training run
+# records this file's sha256 in training_run.json.
+seed: 1337
+
+# weight scales how much of a source enters the mix (deterministic
+# duplication/subsampling, not runtime sampling). max_frac caps a source's
+# share of the final mix AFTER weighting (enforced for synthetic data).
+# Missing files are skipped with a warning (e.g. existing28k is optional).
+sources:
+  - path: data/train/existing28k.jsonl   # original private-repo pairs, if provided
+    weight: 1.0
+    optional: true
+  - path: data/train/lexicon.jsonl
+    weight: 1.0
+  - path: data/train/ua_gec.jsonl
+    weight: 1.0
+  - path: data/train/omnigec.jsonl
+    weight: 0.7
+    optional: true
+  - path: data/train/synth.jsonl
+    weight: 0.5
+    max_frac: 0.4
+
+model:
+  embed_dim: 128
+  hidden_dim: 256
+  dropout: 0.2
+
+training:
+  batch_size: 128
+  lr: 0.001
+  epochs: 30
+  teacher_forcing: 0.5
+  grad_clip: 1.0
+  val_frac: 0.02
+  early_stop_patience: 5
+  scheduler:
+    type: reduce_on_plateau
+    factor: 0.5
+    patience: 2
+  min_freq: 2
+  max_src_len: 16            # matches translate_expression() encode max_len
+  max_tgt_len: 16
+
+frozen_hashes: data/eval/frozen_v1.hashes.txt
+output_dir: data/checkpoints

@@ -1,0 +1,6 @@
+# Extra dependencies for the dataset/training pipeline (scripts/ only, not the pip package).
+# Install on top of: pip install -e ".[dev,ml]"
+ua-gec>=2.1.3
+datasets>=2.19
+huggingface_hub>=0.23
+pyyaml>=6.0

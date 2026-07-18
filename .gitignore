@@ -12,7 +12,15 @@ build/
 *.egg
 .DS_Store
 notebooks/.ipynb_checkpoints/
-data/exports/*.jsonl
-data/exports/*.csv
 gemini.json
-data/
+
+# Data: everything ignored except manifests and the frozen eval set.
+# (git cannot re-include files under an ignored directory, hence data/** + ! rules.)
+data/**
+!data/raw/
+!data/raw/MANIFEST.md
+!data/eval/
+!data/eval/FROZEN.md
+!data/eval/frozen_v1.jsonl
+!data/eval/frozen_v1.hashes.txt
+!data/eval/baseline_v0.4.2.json
