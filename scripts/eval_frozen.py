@@ -55,12 +55,16 @@ def evaluate(model_dir: Path, eval_path: Path) -> dict:
     n = exact = latin_ok = none = 0
     src_tokens = pred_tokens = 0
     per_source: dict[str, dict[str, int]] = {}
+    digits = {"n": 0, "exact": 0}  # окремий зріз: пари з цифрами в src
 
     for rec in read_jsonl(eval_path):
         n += 1
         src, tgt = rec["src"], rec["tgt"]
         stats = per_source.setdefault(rec.get("source", "unknown"), {"n": 0, "exact": 0})
         stats["n"] += 1
+        has_digits = any(ch.isdigit() for ch in src)
+        if has_digits:
+            digits["n"] += 1
 
         pred = seq2seq.translate_expression(src, model_dir=model_dir)
         if pred is None:
@@ -70,6 +74,8 @@ def evaluate(model_dir: Path, eval_path: Path) -> dict:
             if pred == tgt.strip().lower():
                 exact += 1
                 stats["exact"] += 1
+                if has_digits:
+                    digits["exact"] += 1
             if target_ok(src, pred):
                 latin_ok += 1
         if enc:
@@ -88,6 +94,10 @@ def evaluate(model_dir: Path, eval_path: Path) -> dict:
         "per_source": {
             src: {"n": s["n"], "exact_match": round(s["exact"] / s["n"], 4)}
             for src, s in sorted(per_source.items())
+        },
+        "has_digits": {
+            "n": digits["n"],
+            "exact_match": round(digits["exact"] / digits["n"], 4) if digits["n"] else None,
         },
     }
 

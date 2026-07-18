@@ -229,23 +229,34 @@ class TestHash:
 
 
 class TestCheckpointRoundtrip:
-    def test_save_checkpoint_loads_via_wake_up_expr(self, tmp_path):
+    @pytest.mark.parametrize("tokenizer", ["word", "bpe"])
+    def test_save_checkpoint_loads_via_wake_up_expr(self, tmp_path, tokenizer):
         """Замок на деплой-сумісність: чекпоінт з train_expressions мусить
         вантажитись продакшн-лоадером wake_up_expr і перекладати."""
         pytest.importorskip("torch")
-        import dormouse.seq2seq as seq2seq
         from train_expressions import save_checkpoint
 
-        src_vocab = seq2seq.WordVocab(min_freq=1)
-        src_vocab.build(["шо там", "як справи", "шо там по багу"])
-        tgt_vocab = seq2seq.WordVocab(min_freq=1)
-        tgt_vocab.build(["status?", "how?", "bug status?"])
+        import dormouse.seq2seq as seq2seq
 
-        model_cfg = {"embed_dim": 16, "hidden_dim": 32, "dropout": 0.0}
+        src_texts = ["шо там", "як справи", "шо там по багу"]
+        tgt_texts = ["status?", "how?", "bug status?"]
+        if tokenizer == "bpe":
+            src_vocab = seq2seq.SubwordVocab()
+            src_vocab.train(src_texts, vocab_size=200)
+            tgt_vocab = seq2seq.SubwordVocab()
+            tgt_vocab.train(tgt_texts, vocab_size=200)
+        else:
+            src_vocab = seq2seq.WordVocab(min_freq=1)
+            src_vocab.build(src_texts)
+            tgt_vocab = seq2seq.WordVocab(min_freq=1)
+            tgt_vocab.build(tgt_texts)
+
+        model_cfg = {"embed_dim": 16, "hidden_dim": 32, "dropout": 0.0, "tokenizer": tokenizer}
         model = seq2seq.ExpressionTranslator(
-            len(src_vocab), len(tgt_vocab), **model_cfg
+            len(src_vocab), len(tgt_vocab),
+            model_cfg["embed_dim"], model_cfg["hidden_dim"], model_cfg["dropout"],
         )
-        save_checkpoint(model, src_vocab, tgt_vocab, model_cfg, tmp_path)
+        save_checkpoint(model, src_vocab, tgt_vocab, model_cfg, tmp_path, max_src_tokens=48)
 
         for name in ("expr_seq2seq.pt", "expr_config.json",
                      "expr_vocab_src.json", "expr_vocab_tgt.json"):
@@ -261,9 +272,9 @@ class TestCheckpointRoundtrip:
     def test_saved_keys_are_short_format(self, tmp_path):
         pytest.importorskip("torch")
         import torch
+        from train_expressions import save_checkpoint
 
         import dormouse.seq2seq as seq2seq
-        from train_expressions import save_checkpoint
 
         vocab = seq2seq.WordVocab(min_freq=1)
         vocab.build(["слово тест"])

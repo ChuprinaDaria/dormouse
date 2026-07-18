@@ -177,7 +177,9 @@ def val_exact_match(model, val_pairs, src_vocab, tgt_vocab, max_src, device, bat
     return exact / max(len(val_pairs), 1)
 
 
-def save_checkpoint(model, src_vocab, tgt_vocab, model_cfg, out_dir: Path) -> None:
+def save_checkpoint(
+    model, src_vocab, tgt_vocab, model_cfg, out_dir: Path, max_src_tokens: int | None = None
+) -> None:
     """Зберігає чекпоінт у деплойному форматі і сам себе перевіряє."""
     import torch
 
@@ -194,18 +196,17 @@ def save_checkpoint(model, src_vocab, tgt_vocab, model_cfg, out_dir: Path) -> No
     torch.save(short, out_dir / "expr_seq2seq.pt")
     src_vocab.save(out_dir / "expr_vocab_src.json")
     tgt_vocab.save(out_dir / "expr_vocab_tgt.json")
-    (out_dir / "expr_config.json").write_text(
-        json.dumps(
-            {
-                "src_vocab_size": len(src_vocab),
-                "tgt_vocab_size": len(tgt_vocab),
-                "embed_dim": model_cfg["embed_dim"],
-                "hidden_dim": model_cfg["hidden_dim"],
-                "dropout": model_cfg["dropout"],
-            }
-        ),
-        encoding="utf-8",
-    )
+    config = {
+        "src_vocab_size": len(src_vocab),
+        "tgt_vocab_size": len(tgt_vocab),
+        "embed_dim": model_cfg["embed_dim"],
+        "hidden_dim": model_cfg["hidden_dim"],
+        "dropout": model_cfg["dropout"],
+        "tokenizer": model_cfg.get("tokenizer", "word"),
+    }
+    if max_src_tokens is not None:
+        config["max_src_tokens"] = max_src_tokens
+    (out_dir / "expr_config.json").write_text(json.dumps(config), encoding="utf-8")
 
     # self-verify: чекпоінт мусить вантажитись деплойним лоадером
     import dormouse.seq2seq as seq2seq
@@ -248,11 +249,20 @@ def main() -> None:
     val_pairs, train_pairs = mix[:n_val], mix[n_val:]
     print(f"mix: {len(train_pairs)} train / {len(val_pairs)} val pairs on {device}")
 
-    src_vocab = WordVocab(min_freq=tcfg["min_freq"])
-    src_vocab.build([p["src"] for p in train_pairs])
-    tgt_vocab = WordVocab(min_freq=tcfg["min_freq"])
-    tgt_vocab.build([p["tgt"] for p in train_pairs])
-    print(f"vocab: src {len(src_vocab)}, tgt {len(tgt_vocab)}")
+    tokenizer = mcfg.get("tokenizer", "word")
+    if tokenizer == "bpe":
+        from dormouse.seq2seq import SubwordVocab
+
+        src_vocab = SubwordVocab()
+        src_vocab.train([p["src"] for p in train_pairs], mcfg.get("src_vocab_size", 8000))
+        tgt_vocab = SubwordVocab()
+        tgt_vocab.train([p["tgt"] for p in train_pairs], mcfg.get("tgt_vocab_size", 6000))
+    else:
+        src_vocab = WordVocab(min_freq=tcfg["min_freq"])
+        src_vocab.build([p["src"] for p in train_pairs])
+        tgt_vocab = WordVocab(min_freq=tcfg["min_freq"])
+        tgt_vocab.build([p["tgt"] for p in train_pairs])
+    print(f"vocab ({tokenizer}): src {len(src_vocab)}, tgt {len(tgt_vocab)}")
 
     model = ExpressionTranslator(
         len(src_vocab), len(tgt_vocab), mcfg["embed_dim"], mcfg["hidden_dim"], mcfg["dropout"]
@@ -287,7 +297,10 @@ def main() -> None:
 
         if em > best_em:
             best_em, best_epoch, since_best = em, epoch, 0
-            save_checkpoint(model, src_vocab, tgt_vocab, mcfg, out_dir)
+            save_checkpoint(
+                model, src_vocab, tgt_vocab, mcfg, out_dir,
+                max_src_tokens=tcfg["max_src_len"],
+            )
         else:
             since_best += 1
             if since_best >= tcfg["early_stop_patience"]:

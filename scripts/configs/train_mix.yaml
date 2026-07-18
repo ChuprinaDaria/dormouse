@@ -22,8 +22,11 @@ sources:
     max_frac: 0.4
 
 model:
-  embed_dim: 128
-  hidden_dim: 256
+  tokenizer: bpe             # bpe (v0.6, сабворди) | word (v0.5, legacy)
+  src_vocab_size: 8000       # тільки для bpe
+  tgt_vocab_size: 6000       # тільки для bpe
+  embed_dim: 192
+  hidden_dim: 384
   dropout: 0.2
 
 training:
@@ -38,9 +41,9 @@ training:
     type: reduce_on_plateau
     factor: 0.5
     patience: 2
-  min_freq: 2
-  max_src_len: 16            # matches translate_expression() encode max_len
-  max_tgt_len: 16
+  min_freq: 2                # тільки для word-токенізатора
+  max_src_len: 48            # BPE-токени; для word ставити 16
+  max_tgt_len: 48
 
 frozen_hashes: data/eval/frozen_v1.hashes.txt
 output_dir: data/checkpoints

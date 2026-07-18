@@ -74,3 +74,101 @@ class TestExpressionTranslator:
 
         result = wake_up_expr(tmp_path)
         assert result is None
+
+
+class TestSubwordVocab:
+    TEXTS = [
+        "шо там по багу",
+        "що там з багом",
+        "треба виправити помилку",
+        "помилка у формі замовлення",
+        "як справи взагалі нормально",
+        "де моє замовлення зараз",
+    ]
+
+    def _vocab(self):
+        from dormouse.seq2seq import SubwordVocab
+
+        v = SubwordVocab()
+        v.train(self.TEXTS, vocab_size=300)
+        return v
+
+    def test_special_token_ids_match_wordvocab(self):
+        from dormouse.seq2seq import SubwordVocab
+
+        assert (SubwordVocab.PAD, SubwordVocab.SOS, SubwordVocab.EOS, SubwordVocab.UNK) == (
+            WordVocab.PAD, WordVocab.SOS, WordVocab.EOS, WordVocab.UNK,
+        )
+
+    def test_roundtrip(self):
+        v = self._vocab()
+        for text in self.TEXTS:
+            assert v.decode(v.encode(text)) == text
+
+    def test_typo_and_digits_no_unk(self):
+        v = self._vocab()
+        # одруківка і число зі знайомих символів — жодного UNK
+        for text in ["памилка", "багу 4512"]:
+            ids = v.encode("памилка")
+            assert v.UNK not in ids
+
+    def test_digits_roundtrip(self):
+        v = self._vocab()
+        assert v.decode(v.encode("замовлення 4512")) == "замовлення 4512"
+
+    def test_unknown_char_is_unk(self):
+        v = self._vocab()
+        ids = v.encode("参")
+        assert v.UNK in ids
+
+    def test_save_load_roundtrip(self, tmp_path):
+        from dormouse.seq2seq import SubwordVocab
+
+        v = self._vocab()
+        v.save(tmp_path / "vocab.json")
+        v2 = SubwordVocab()
+        v2.load(tmp_path / "vocab.json")
+        text = "шо там по багу"
+        assert v2.encode(text) == v.encode(text)
+        assert v2.decode(v2.encode(text)) == text
+
+    def test_encode_lowercases(self):
+        v = self._vocab()
+        assert v.encode("ШО ТАМ") == v.encode("шо там")
+
+
+class TestLoadVocab:
+    def test_word_file_word_config(self, tmp_path):
+        from dormouse.seq2seq import load_vocab
+
+        v = WordVocab(min_freq=1)
+        v.build(["слово тест"])
+        v.save(tmp_path / "v.json")
+        loaded = load_vocab(tmp_path / "v.json", "word")
+        assert isinstance(loaded, WordVocab)
+
+    def test_bpe_file_bpe_config(self, tmp_path):
+        from dormouse.seq2seq import SubwordVocab, load_vocab
+
+        v = SubwordVocab()
+        v.train(["слово тест"], vocab_size=50)
+        v.save(tmp_path / "v.json")
+        loaded = load_vocab(tmp_path / "v.json", "bpe")
+        assert isinstance(loaded, SubwordVocab)
+
+    def test_mixed_formats_raise(self, tmp_path):
+        import pytest as _pytest
+
+        from dormouse.seq2seq import SubwordVocab, load_vocab
+
+        word = WordVocab(min_freq=1)
+        word.build(["слово тест"])
+        word.save(tmp_path / "word.json")
+        with _pytest.raises(ValueError):
+            load_vocab(tmp_path / "word.json", "bpe")
+
+        bpe = SubwordVocab()
+        bpe.train(["слово тест"], vocab_size=50)
+        bpe.save(tmp_path / "bpe.json")
+        with _pytest.raises(ValueError):
+            load_vocab(tmp_path / "bpe.json", "word")

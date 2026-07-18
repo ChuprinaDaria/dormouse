@@ -89,9 +89,23 @@ pip install -e ".[dev,ml]" -r scripts/requirements.txt
 DORMOUSE_DATA_DIR=data/assets python scripts/train_expressions.py \
     --epochs 2 --max-pairs 3000 --run-name run_smoke
 
-# повний трен (device=cuda підхопиться сам; 30 епох max, early stop patience 5):
-DORMOUSE_DATA_DIR=data/assets python scripts/train_expressions.py --run-name run_v1
+# ДВА повні рани на ТОМУ САМОМУ міксі — для чистого виміру внеску архітектури
+# (device=cuda підхопиться сам; 30 епох max, early stop patience 5):
+
+# Ран 1 — v0.5 (стара архітектура, нові дані): у scripts/configs/train_mix.yaml
+# тимчасово поставити model: tokenizer: word, embed_dim: 128, hidden_dim: 256,
+# training: max_src_len: 16, max_tgt_len: 16
+DORMOUSE_DATA_DIR=data/assets python scripts/train_expressions.py --run-name run_v05_word
+
+# Ран 2 — v0.6 (subword BPE + 192/384): повернути дефолти конфігу
+# (tokenizer: bpe, embed 192, hidden 384, max_len 48)
+DORMOUSE_DATA_DIR=data/assets python scripts/train_expressions.py --run-name run_v06_bpe
 ```
+
+Порівняння в `DATA_REVISIONS.md` — три точки на одному frozen_v1: baseline
+0.4.2 → run_v05_word (внесок даних) → run_v06_bpe (внесок токенізації).
+В метриках є зріз `has_digits` — очікуваний найбільший приріст у v0.6 саме
+там і на ua_gec-страті.
 
 Вихід: `data/checkpoints/run_v1/` — `expr_seq2seq.pt` + `expr_config.json` +
 `expr_vocab_{src,tgt}.json` (деплойний формат, чекпоінт self-verify через

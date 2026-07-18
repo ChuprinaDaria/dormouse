@@ -74,6 +74,165 @@ class WordVocab:
         self.idx2word = {int(v): k for k, v in self.word2idx.items()}
 
 
+class SubwordVocab:
+    """BPE-сабворди з посимвольною базою (v0.6).
+
+    Той самий інтерфейс, що у WordVocab (duck-typing) — модель і
+    translate_expression працюють з обома. База словника — всі символи
+    трейн-корпусу, тому <UNK> можливий лише для невідомого СИМВОЛУ:
+    одруківки, числа і нові слова розкладаються на шматки аж до літер.
+    Маркер початку слова — "▁" (як sentencepiece).
+    """
+
+    PAD = 0
+    SOS = 1
+    EOS = 2
+    UNK = 3
+
+    _SPECIALS = {"<PAD>": 0, "<SOS>": 1, "<EOS>": 2, "<UNK>": 3}
+    _WORD_MARK = "▁"  # ▁
+    # Гарантована посимвольна база: цифри/латиниця/укр. абетка/пунктуація
+    # завжди кодовані, навіть якщо символ не траплявся у трейн-корпусі
+    _BASE_CHARS = (
+        "0123456789"
+        "abcdefghijklmnopqrstuvwxyz"
+        "абвгґдеєжзиіїйклмнопрстуфхцчшщьюя"
+        ".,!?;:()\"'-+%$#&/@ыэъё"
+    )
+
+    def __init__(self):
+        self.vocab: dict[str, int] = dict(self._SPECIALS)
+        self.merges: list[tuple[str, str]] = []
+        self._merge_ranks: dict[tuple[str, str], int] = {}
+        self._encode_cache: dict[str, list[str]] = {}
+
+    # --- навчання ---
+
+    def train(self, texts: list[str], vocab_size: int = 8000):
+        """Вчить BPE merges по частоті до vocab_size токенів."""
+        words: Counter = Counter()
+        for text in texts:
+            for w in text.lower().split():
+                words[self._WORD_MARK + w] += 1
+
+        # посимвольна база: гарантований набір + усі символи корпусу
+        for ch in [self._WORD_MARK, *self._BASE_CHARS]:
+            if ch not in self.vocab:
+                self.vocab[ch] = len(self.vocab)
+        pieces = {w: list(w) for w in words}
+        for chars in pieces.values():
+            for ch in chars:
+                if ch not in self.vocab:
+                    self.vocab[ch] = len(self.vocab)
+
+        while len(self.vocab) < vocab_size:
+            pair_counts: Counter = Counter()
+            for w, freq in words.items():
+                chars = pieces[w]
+                for i in range(len(chars) - 1):
+                    pair_counts[(chars[i], chars[i + 1])] += freq
+            if not pair_counts:
+                break
+            (a, b), freq = pair_counts.most_common(1)[0]
+            if freq < 2:
+                break
+            merged = a + b
+            self.merges.append((a, b))
+            self.vocab[merged] = len(self.vocab)
+            for w, chars in pieces.items():
+                if merged not in w:  # пара суміжна в pieces ⇒ a+b — підрядок w
+                    continue
+                new_chars = []
+                i = 0
+                while i < len(chars):
+                    if i < len(chars) - 1 and chars[i] == a and chars[i + 1] == b:
+                        new_chars.append(merged)
+                        i += 2
+                    else:
+                        new_chars.append(chars[i])
+                        i += 1
+                pieces[w] = new_chars
+
+        self._merge_ranks = {pair: i for i, pair in enumerate(self.merges)}
+        self._encode_cache.clear()
+
+    # --- кодування ---
+
+    def _split_word(self, word: str) -> list[str]:
+        if word in self._encode_cache:
+            return self._encode_cache[word]
+        chars = list(word)
+        while len(chars) > 1:
+            best, best_rank = None, None
+            for i in range(len(chars) - 1):
+                rank = self._merge_ranks.get((chars[i], chars[i + 1]))
+                if rank is not None and (best_rank is None or rank < best_rank):
+                    best, best_rank = i, rank
+            if best is None:
+                break
+            chars = chars[:best] + [chars[best] + chars[best + 1]] + chars[best + 2:]
+        self._encode_cache[word] = chars
+        return chars
+
+    def encode(self, text: str, max_len: int = 48) -> list[int]:
+        ids = [self.SOS]
+        for w in text.lower().split():
+            for piece in self._split_word(self._WORD_MARK + w):
+                ids.append(self.vocab.get(piece, self.UNK))
+        ids = ids[: max_len - 1]
+        ids.append(self.EOS)
+        return ids
+
+    def decode(self, ids: list[int]) -> str:
+        idx2tok = {v: k for k, v in self.vocab.items()}
+        pieces = []
+        for idx in ids:
+            if idx == self.EOS:
+                break
+            if idx in (self.PAD, self.SOS):
+                continue
+            pieces.append(idx2tok.get(idx, "<UNK>"))
+        return "".join(pieces).replace(self._WORD_MARK, " ").strip()
+
+    def __len__(self):
+        return len(self.vocab)
+
+    def save(self, path: Path):
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(
+                {"type": "bpe", "vocab": self.vocab, "merges": [list(m) for m in self.merges]},
+                f, ensure_ascii=False,
+            )
+
+    def load(self, path: Path):
+        with open(path, encoding="utf-8") as f:
+            data = json.load(f)
+        if data.get("type") != "bpe":
+            raise ValueError(f"{path}: не BPE-словник (нема type=bpe)")
+        self.vocab = data["vocab"]
+        self.merges = [tuple(m) for m in data["merges"]]
+        self._merge_ranks = {pair: i for i, pair in enumerate(self.merges)}
+        self._encode_cache.clear()
+
+
+def load_vocab(path: Path, tokenizer: str):
+    """Вантажить словник потрібного типу; ловить змішування форматів."""
+    with open(path, encoding="utf-8") as f:
+        data = json.load(f)
+    is_bpe_file = isinstance(data, dict) and data.get("type") == "bpe"
+    if tokenizer == "bpe":
+        if not is_bpe_file:
+            raise ValueError(f"{path}: конфіг каже bpe, а словник — word-level")
+        vocab = SubwordVocab()
+        vocab.load(path)
+        return vocab
+    if is_bpe_file:
+        raise ValueError(f"{path}: конфіг каже word, а словник — BPE")
+    vocab = WordVocab()
+    vocab.load(path)
+    return vocab
+
+
 class Encoder(nn.Module):
     def __init__(
         self, vocab_size: int, embed_dim: int = 128,
@@ -224,10 +383,10 @@ def wake_up_expr(
     with open(config_path, encoding="utf-8") as f:
         config = json.load(f)
 
-    src_vocab = WordVocab()
-    src_vocab.load(src_vocab_path)
-    tgt_vocab = WordVocab()
-    tgt_vocab.load(tgt_vocab_path)
+    # v0.6: "tokenizer": "bpe" у конфігу → SubwordVocab; відсутнє = word-level
+    tokenizer = config.get("tokenizer", "word")
+    src_vocab = load_vocab(src_vocab_path, tokenizer)
+    tgt_vocab = load_vocab(tgt_vocab_path, tokenizer)
 
     model = ExpressionTranslator(
         config["src_vocab_size"],
@@ -260,6 +419,8 @@ def wake_up_expr(
 
     model.load_state_dict(mapped)
     model.train(False)
+    # сабворди довші за слова: 2-4 слова ≈ 8-30 BPE-токенів
+    model.max_src_tokens = config.get("max_src_tokens", 48 if tokenizer == "bpe" else 16)
 
     _expr_cache = (model, src_vocab, tgt_vocab)
     return _expr_cache
@@ -275,8 +436,9 @@ def translate_expression(text: str, model_dir: Path | None = None) -> str | None
         return None
 
     model, src_vocab, tgt_vocab = loaded
-    src_ids = torch.tensor(src_vocab.encode(text, max_len=16))
-    result = model.translate(src_ids, tgt_vocab)
+    max_len = getattr(model, "max_src_tokens", 16)
+    src_ids = torch.tensor(src_vocab.encode(text, max_len=max_len))
+    result = model.translate(src_ids, tgt_vocab, max_len=max_len)
 
     # Якщо результат містить тільки <UNK> — модель не впоралась
     if not result or result.strip() == "<UNK>" or result.count("<UNK>") > len(result.split()) // 2:
