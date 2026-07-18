@@ -1,0 +1,3 @@
+dormouse-ua>=0.4.4
+fastapi>=0.110
+uvicorn>=0.29
