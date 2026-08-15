@@ -211,10 +211,11 @@ each, CPU inference. Training corpus for v0.7 is **285 784 pairs** (uk→en) and
 
 ### Read the starred slices with suspicion
 
-`*` — on the `cs` and `native` slices the **Ukrainian reference side was itself
-produced by gemini-2.5-flash**, not by a human. A 58-68 BLEU there means "the
-fine-tune reproduces Gemini's Ukrainian well", which is what it was trained to
-do. It is not evidence of human-level quality.
+`*` — on the `cs` and `native` slices the **Ukrainian side is machine-generated**
+(gemini-2.5-flash), not written by a human: it is the source in uk→en and the
+reference in en→uk. A 48-68 BLEU there means "the fine-tune reproduces Gemini's
+Ukrainian well", which is what it was trained to do. It is not evidence of
+human-level quality.
 
 The honest slices are `v06` / `inv` (real Ukrainian chat with human references)
 and `surzhyk`. Read those first: **31.32 BLEU** uk→en and **19.97 BLEU** en→uk.
