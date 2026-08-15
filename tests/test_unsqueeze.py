@@ -137,3 +137,52 @@ class TestUnsqueezeLLMFallback:
         """Без translate_fn — тільки word-by-word."""
         result = unsqueeze("the container corrupted completely unexpectedly")
         assert isinstance(result, str)
+
+
+class TestUnsqueezeMT:
+    """MarianMT шлях — тільки за явним opt-in (ваги важать ~300 МБ)."""
+
+    def _fake_translator(self, monkeypatch, out="МТ переклад"):
+        calls = []
+
+        class _MT:
+            def translate(self, text, **kwargs):
+                calls.append(text)
+                return out
+
+        import dormouse.mt_translator as mt_mod
+        monkeypatch.setattr(mt_mod, "get_translator", lambda d: _MT())
+        return calls
+
+    def test_mt_not_used_by_default(self, monkeypatch):
+        monkeypatch.delenv("DORMOUSE_USE_MT", raising=False)
+        calls = self._fake_translator(monkeypatch)
+        unsqueeze("fix the error")
+        assert not calls
+
+    def test_mt_used_when_enabled(self, monkeypatch):
+        calls = self._fake_translator(monkeypatch)
+        assert unsqueeze("fix the error", use_mt=True) == "МТ переклад"
+        assert calls == ["fix the error"]
+
+    def test_mt_enabled_via_env(self, monkeypatch):
+        monkeypatch.setenv("DORMOUSE_USE_MT", "1")
+        calls = self._fake_translator(monkeypatch)
+        assert unsqueeze("fix the error") == "МТ переклад"
+        assert calls
+
+    def test_falls_back_when_mt_raises(self, monkeypatch):
+        import dormouse.mt_translator as mt_mod
+
+        def boom(direction):
+            raise RuntimeError("no weights")
+
+        monkeypatch.setattr(mt_mod, "get_translator", boom)
+        result = unsqueeze("fix the error", use_mt=True)
+        assert "помилку" in result
+
+    def test_falls_back_when_mt_returns_empty(self, monkeypatch):
+        calls = self._fake_translator(monkeypatch, out="   ")
+        result = unsqueeze("fix the error", use_mt=True)
+        assert calls
+        assert "помилку" in result
