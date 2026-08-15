@@ -6,9 +6,12 @@ unsqueeze перекладає назад в українську через SQL
 v2: фільтрація EN стоп-слів, пріоритетний вибір UA форми.
 v3: морфологічне узгодження (прийменник→відмінок, дієслово→об'єкт, рід).
 v4: LLM fallback — якщо >30% слів не перекладено, translate_fn доперекладає.
+v5: опційний MarianMT en-uk (use_mt=True або DORMOUSE_USE_MT=1) як
+    найякісніший шлях; лексикон лишається дефолтом без важких завантажень.
 """
 
 import logging
+import os
 import re
 import sqlite3
 from collections.abc import Callable
@@ -263,14 +266,25 @@ def unsqueeze(
     text: str,
     *,
     translate_fn: Callable[[str], str] | None = None,
+    use_mt: bool | None = None,
 ) -> str:
     """Перекладає EN відповідь моделі назад в українську.
+
+    Три шляхи, у порядку спадання якості:
+
+    1. fine-tuned MarianMT ``en-uk`` — вмикається явно (``use_mt``), бо
+       тягне ~300 МБ ваг з HuggingFace при першому виклику;
+    2. word-by-word по лексикону + морфокорекція — дефолт, працює одразу;
+    3. ``translate_fn`` — якщо word-by-word лишив >30% англійських слів.
 
     Args:
         text: Англійський текст (відповідь Claude/GPT/local model).
         translate_fn: Опціональна функція LLM-перекладу (str→str).
             Якщо передана і word-by-word якість низька (>30% EN слів) —
             fallback на LLM переклад оригінального тексту.
+        use_mt: Використати MarianMT. ``None`` (дефолт) читає змінну
+            середовища ``DORMOUSE_USE_MT``. Якщо модель недоступна або
+            повернула порожнє — тихо падаємо на word-by-word.
 
     Returns:
         Текст українською.
@@ -279,6 +293,22 @@ def unsqueeze(
         return text
 
     original_text = text
+
+    if use_mt is None:
+        use_mt = os.environ.get("DORMOUSE_USE_MT", "").lower() in ("1", "true", "yes")
+
+    if use_mt:
+        try:
+            from dormouse.mt_translator import get_translator
+            mt = get_translator("en-uk")
+            if mt is not None:
+                mt_out = mt.translate(text)
+                if mt_out and mt_out.strip():
+                    return mt_out
+        except Exception:  # noqa: BLE001 — падаємо на rule-based шлях
+            logger.warning("dormouse: MT unsqueeze failed, using word-by-word",
+                           exc_info=True)
+
     en_to_ua = _get_en_to_ua()
 
     # Longest match first (фрази перед словами)

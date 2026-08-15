@@ -1,0 +1,13 @@
+dormouse v0.7 — real prompt tokens via OpenRouter
+22 Ukrainian phrases, each sent raw (UK) and dormouse-translated (EN).
+
+| model                     | UK in | EN in | saved |
+|---------------------------|------:|------:|------:|
+| OpenAI GPT-5.5            |   573 |   483 | 15.7% |
+| OpenAI GPT-4.1            |   595 |   505 | 15.1% |
+| OpenAI GPT-4              |   728 |   513 | 29.5% |
+| Anthropic Claude Opus 5   |   701 |   625 | 10.8% |
+| Anthropic Claude Sonnet 5 |   701 |   625 | 10.8% |
+| Anthropic Claude Opus 4.8 |   701 |   625 | 10.8% |
+| Google Gemini 3.7 Flash   |   431 |   369 | 14.4% |
+| Google Gemini 3.1 Pro     |   431 |   369 | 14.4% |

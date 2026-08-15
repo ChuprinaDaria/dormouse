@@ -1,0 +1,82 @@
+[llm=qwen2.5:3b]
+
+===== 1 =====
+[UA in   ]  Доброго дня, а скільки коштує доставка в Україну і за скільки днів прийде?
+[EN in   ]  Good afternoon, how much does delivery cost in Ukraine, and how many days will it arrive?
+[EN out  ]  Hello! Delivery to Ukraine costs $10 with an estimated 3-5 business days for arrival.
+[CHAIN UA]  Привіт! Доставка в Україну коштує 10 доларів з підрахунком 3-5 робочих днів для прибуття.
+[DIRECT  ]  Добрий день! Доставка до Києва займає 5-7 доби з Польщі. Ціна - 100 грн. Будь ласка, перевірте ціни на сайті нашого постачальника.
+[time    ]  chain=44.3s direct=76.5s
+
+===== 2 =====
+[UA in   ]  хочу замовити два браслети, знижка якась є на два?
+[EN in   ]  I want to order two bracelets, is there any kind of discount for two?
+[EN out  ]  We offer no specific discount but welcome your order! Two bracelets at a slight savings available.
+[CHAIN UA]  Ми не пропонуємо конкретної знижки, а вітаємо ваш заказ! Два браслети на легкому заощадженні.
+[DIRECT  ]  Замовляйте, у нас вигідна знижка на покупки більше двох товарів. Добре зараз!
+[time    ]  chain=43.1s direct=90.5s
+
+===== 3 =====
+[UA in   ]  а можна оплатити при отриманні? бо карткою не хочу
+[EN in   ]  Can I pay when I receive it? Because I don't want to pay by card.
+[EN out  ]  Yes, you can pay upon receipt. We accept all major cards for payment.
+[CHAIN UA]  Так, ви можете оплатити чек. Ми приймаємо всі основні картки на оплату.
+[DIRECT  ]  Дуже зрозуміло, ви можете оплатити при отриманні товару. Я розверну цей момент для вас.
+[time    ]  chain=34.2s direct=49.6s
+
+===== 4 =====
+[UA in   ]  замовляла ще тиждень тому, де моє замовлення, номер 1042
+[EN in   ]  I booked it a week ago, where's my order, number 1042.
+[EN out  ]  Hello! Your order is on its way. Please allow up to 7 business days for delivery. Number 1042.
+[CHAIN UA]  Привіт! Ваше замовлення вже їде. Дозвольте, будь ласка, до 7 робочих днів доставки. Номер 1042.
+[DIRECT  ]  Дякую за звернення. Ваше замовлення №1042 від {{data.date}} тепер перебуваємо на реалізації. Звернетесь у кращому часі, якщо потрібно буде додатково знати.
+[time    ]  chain=30.0s direct=78.6s
+
+===== 5 =====
+[UA in   ]  а якщо розмір не підійде, можна поміняти або повернути?
+[EN in   ]  And if the size doesn't work, can I change it or return it?
+[EN out  ]  Yes, you can exchange or return any item that doesn't fit. Please contact us for details.
+[CHAIN UA]  Так, ти можеш обміняти або повертати будь-який товар, який не підходить. Будь ласка, зв'яжіться з нами, щоб дізнатися деталі.
+[DIRECT  ]  Дякуємо за запит! Розміри можуть бути поміншими, але ви зможете обміняти або повернути товар у разі недовгого необхідності.
+[time    ]  chain=49.3s direct=95.4s
+
+===== 6 =====
+[UA in   ]  скажіть будь ласка цей перстень є в сріблі чи тільки латунь?
+[EN in   ]  Please tell me, is this ring in silver or just brass?
+[EN out  ]  This ring is made of sterling silver, not brass.
+[CHAIN UA]  Ця обручка зроблена з бездоганного срібла, а не з міді.
+[DIRECT  ]  Цей перстень складений з сріbullі та латуні.
+[time    ]  chain=22.7s direct=67.6s
+
+===== 7 =====
+[UA in   ]  шо по гарантії якщо застібка зламається?
+[EN in   ]  What about the warranty if the zip is broken?
+[EN out  ]  Our items come with a 1-year warranty starting from delivery. Broken zip repair included within first year.
+[CHAIN UA]  Наші товари привозять з гарантією 1 року починаючи з доставки. Зламаний стільниковий ремонт включається протягом першого року.
+[DIRECT  ]  За гарантийним тарифом замовлення, я розглядаю винунацію за злиття застібки. Буду радий допомогти вам оформити заявку на ремонт.
+[time    ]  chain=40.6s direct=57.2s
+
+===== 8 =====
+[UA in   ]  можете зробити на замовлення з гравіюванням імені?
+[EN in   ]  can you make a name-playing order?
+[EN out  ]  Yes, we can create a special name-playing order for you! Please provide your details.
+[CHAIN UA]  Так, ми можемо створити спеціальний заказ для ігор назв! Будь ласка, надайте свої деталі.
+[DIRECT  ]  Дякую за запит. Так, можу розробити заявку на гравіювання імені. Пожалуйста, дайте мені детальніше повністю інформацію щодо виготовлення.
+[time    ]  chain=32.5s direct=63.5s
+
+===== 9 =====
+[UA in   ]  скиньте реквізити куди платити і я сьогодні оплачу
+[EN in   ]  send me refunds where to pay, and I'll pay today.
+[EN out  ]  Please provide your order details for refund processing. You can send it to support@handmadejewelryshop.com.
+[CHAIN UA]  Будь ласка, надайте деталі вашого замовлення для відшкодування коштів. Ви можете надіслати їх, щоб підтримати @handcadejewelryshop.com.
+[DIRECT  ]  Дякуємо за сприйняття! Ваш внесок здатний допомогти нам підвищити кваліtat стосунк з клієнтами. Якщо потрібно, я надам реквізити для оплати наступного дня.
+[time    ]  chain=39.8s direct=72.3s
+
+===== 10 =====
+[UA in   ]  чи є у вас щось до 200 злотих в подарунок дівчині
+[EN in   ]  do you have anything up to 200 zloty as a gift for a girl?
+[EN out  ]  Yes, we do. Necklaces and bracelets under 200 zł are available. Please ask for specific items.
+[CHAIN UA]  Так, є. Краватки та браслети до 200 зл доступні. Будь ласка, запитай про конкретні речі.
+[DIRECT  ]  Дзвінкайте, я перевірю, чи у нас є товар до 200 злотих для дівчини.
+[time    ]  chain=29.2s direct=61.2s
+
