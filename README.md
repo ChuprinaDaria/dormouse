@@ -155,8 +155,8 @@ own.
 ## Known failure modes
 
 Read this before shipping dormouse into anything customer-facing. The MT models
-are fine-tuned on **159 139 Ukrainian chat pairs** and inherit that domain. Nouns
-outside chat register drift, and a wrong noun survives the round trip:
+are trained on chat and generic customer-support text and inherit that domain.
+Nouns outside it drift, and a wrong noun survives the round trip intact:
 
 | input | translated as | should be |
 |-------|---------------|-----------|
@@ -176,38 +176,57 @@ A domain-specific e-commerce fine-tune is the proper fix and is not done yet.
 
 ---
 
-## MT model quality (held-out eval, sacrebleu)
+## MT model quality (v0.7, held-out eval, sacrebleu)
 
-Fine-tunes of `Helsinki-NLP/opus-mt-uk-en` and `opus-mt-en-uk` on 159 139 real
-Ukrainian chat pairs (Telegram, Threads, synthetic surzhyk). 76M params each,
-CPU-friendly, MIT-compatible.
+Fine-tunes of `Helsinki-NLP/opus-mt-uk-en` and `opus-mt-en-uk`, 76M params
+each, CPU inference. Training corpus for v0.7 is **285 784 pairs** (uk→en) and
+**282 945 pairs** (en→uk), mixed from four sources:
 
-**uk→en** — [`Dariachup/dormouse-mt-uk-en`](https://huggingface.co/Dariachup/dormouse-mt-uk-en)
+| source    | uk→en   | en→uk   | what it is                                        |
+|-----------|--------:|--------:|---------------------------------------------------|
+| `v06`/`inv` | 158 482 | 158 521 | real Ukrainian chat (Telegram, Threads) — human   |
+| `native`  |  96 738 |  97 912 | native English chat (hh-rlhf, oasst1), UA side MT |
+| `cs`      |  20 924 |  24 702 | customer-support bitext, UA side MT               |
+| `surzhyk` |   9 640 |   1 810 | synthetic surzhyk injected into real sentences    |
 
-| slice       | base BLEU | ft BLEU   | Δ          | base chrF | ft chrF   | Δ          |
-|-------------|----------:|----------:|-----------:|----------:|----------:|-----------:|
-| **overall** |     16.93 | **32.50** | **+15.57** |     38.31 | **53.30** | **+14.99** |
-| bentega     |     18.00 |     31.44 |     +13.44 |     39.93 |     52.83 |     +12.90 |
-| tg_bent     |     14.34 |     23.09 |      +8.75 |     33.75 |     44.48 |     +10.73 |
-| threads     |     25.28 |     37.13 |     +11.85 |     46.08 |     56.47 |     +10.39 |
-| synth       |     14.70 |     41.70 |     +27.00 |     37.65 |     61.62 |     +23.97 |
+**uk→en** — [`Dariachup/dormouse-mt-uk-en`](https://huggingface.co/Dariachup/dormouse-mt-uk-en), 1000 held-out pairs:
 
-**en→uk** — [`Dariachup/dormouse-mt-en-uk`](https://huggingface.co/Dariachup/dormouse-mt-en-uk)
+| slice        |   n | base BLEU | ft BLEU   | base chrF | ft chrF   |
+|--------------|----:|----------:|----------:|----------:|----------:|
+| **overall**  |1000 |     23.20 | **38.46** |     45.49 | **58.80** |
+| `cs` *       | 250 |     24.82 |     58.99 |     47.94 |     75.70 |
+| `native` *   | 250 |     34.01 |     47.77 |     57.53 |     67.63 |
+| `v06`        | 250 |     17.43 |     31.32 |     38.82 |     53.16 |
+| `surzhyk`    | 250 |     16.12 |     25.79 |     37.97 |     47.36 |
 
-| slice             | base BLEU | ft BLEU   | Δ          | base chrF | ft chrF   | Δ          |
-|-------------------|----------:|----------:|-----------:|----------:|----------:|-----------:|
-| **overall**       |     10.02 | **20.77** | **+10.75** |     32.98 | **44.07** | **+11.09** |
-| inv_bentega       |      9.38 |     17.12 |      +7.74 |     34.20 |     42.95 |      +8.75 |
-| inv_tg_bent       |      9.46 |     15.08 |      +5.62 |     28.33 |     34.42 |      +6.09 |
-| inv_threads_pairs |     19.26 |     22.88 |      +3.62 |     48.19 |     53.57 |      +5.38 |
-| inv_v4_synth      |      6.01 |     30.81 |     +24.80 |     31.48 |     54.68 |     +23.20 |
+**en→uk** — [`Dariachup/dormouse-mt-en-uk`](https://huggingface.co/Dariachup/dormouse-mt-en-uk), 845 held-out pairs:
 
-The reverse direction lags because generating Ukrainian morphology is harder
-than generating English, and because the English source side of the training
-data is translationese rather than native chat.
+| slice        |   n | base BLEU | ft BLEU   | base chrF | ft chrF   |
+|--------------|----:|----------:|----------:|----------:|----------:|
+| **overall**  | 845 |     21.12 | **40.28** |     44.25 | **62.90** |
+| `cs` *       | 250 |     27.49 |     68.15 |     49.35 |     82.49 |
+| `native` *   | 250 |     26.93 |     49.43 |     49.75 |     68.97 |
+| `inv`        | 250 |      9.70 |     19.97 |     33.97 |     45.26 |
+| `surzhyk`    |  95 |      9.47 |     14.16 |     36.55 |     42.43 |
+
+### Read the starred slices with suspicion
+
+`*` — on the `cs` and `native` slices the **Ukrainian reference side was itself
+produced by gemini-2.5-flash**, not by a human. A 58-68 BLEU there means "the
+fine-tune reproduces Gemini's Ukrainian well", which is what it was trained to
+do. It is not evidence of human-level quality.
+
+The honest slices are `v06` / `inv` (real Ukrainian chat with human references)
+and `surzhyk`. Read those first: **31.32 BLEU** uk→en and **19.97 BLEU** en→uk.
+
+That comparison also corrects an earlier claim in this README. The overall
+en→uk number (40.28) is now *higher* than uk→en (38.46), which looks like the
+reverse direction caught up — it did not. Strip the synthetic-reference slices
+and the picture is unchanged: **31.32 vs 19.97**. Generating Ukrainian
+morphology is still the harder half of the round trip.
 
 **Against cloud translators** — 39 real chat samples, every hypothesis scored
-against the same human reference:
+against the same human reference (measured on v0.6; not yet re-run for v0.7):
 
 | model                       | BLEU      | chrF      | cost / 40 | offline |
 |-----------------------------|----------:|----------:|----------:|:-------:|
