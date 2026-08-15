@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "dormouse-ua"
-version = "0.6.0"
+version = "0.6.1"
 description = "Український міст для LLM: нормалізація суржику + офлайн переклад ua↔en"
 readme = "README.md"
 license = "MIT"
