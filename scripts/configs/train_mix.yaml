@@ -20,6 +20,14 @@ sources:
   - path: data/train/synth.jsonl
     weight: 0.5
     max_frac: 0.4
+  - path: data/train/opus_subs.jsonl
+    weight: 0.5
+    max_frac: 0.25
+    optional: true
+  - path: data/train/tatoeba.jsonl
+    weight: 0.5
+    max_frac: 0.10
+    optional: true
 
 model:
   tokenizer: bpe             # bpe (v0.6, сабворди) | word (v0.5, legacy)

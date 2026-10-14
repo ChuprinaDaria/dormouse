@@ -82,19 +82,79 @@ def compose_source(source: str, conn, frozen: set[str]) -> dict:
     return report
 
 
+
+
+def compose_source_direct_en(source: str, frozen: set[str]) -> dict:
+    """Direct-EN mode: EN target comes from the pair's 'en' field (e.g. OPUS/Tatoeba).
+
+    No windowing, no compose_en. The pair is already short (pre-filtered at download).
+    We only apply: lowercase, target_ok gate, dedup, frozen exclusion.
+    """
+    report = {
+        "input_pairs": 0, "kept": 0,
+        "dropped": {"no_en": 0, "gate_rejected": 0, "frozen": 0, "duplicate": 0},
+    }
+    records = []
+    seen: set[str] = set()
+
+    for rec in read_jsonl(PAIRS_DIR / f"{source}.jsonl"):
+        report["input_pairs"] += 1
+        en = rec.get("en", "")
+        if not en:
+            report["dropped"]["no_en"] += 1
+            continue
+
+        src = rec["dirty"].lower()
+        tgt = en.lower().strip()
+        key = sha256_text(src)
+
+        if key in seen:
+            report["dropped"]["duplicate"] += 1
+            continue
+        if key in frozen:
+            report["dropped"]["frozen"] += 1
+            continue
+        if not target_ok(src, tgt):
+            report["dropped"]["gate_rejected"] += 1
+            continue
+
+        seen.add(key)
+        records.append(
+            {
+                "src": src,
+                "tgt": tgt,
+                "clean": rec.get("clean", ""),
+                "source": rec.get("source", source),
+                "license": rec.get("license", ""),
+            }
+        )
+        report["kept"] += 1
+
+    write_jsonl(TRAIN_DIR / f"{source}.jsonl", records)
+    (TRAIN_DIR / f"report_{source}.json").write_text(
+        json.dumps(report, indent=2, ensure_ascii=False), encoding="utf-8"
+    )
+    return report
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source", required=True, help="pairs file stem, e.g. ua_gec")
+    parser.add_argument("--direct-en", action="store_true",
+                        help="use 'en' field from pairs as target (skip compose_en)")
     args = parser.parse_args()
 
     if not (PAIRS_DIR / f"{args.source}.jsonl").exists():
         sys.exit(f"data/pairs/{args.source}.jsonl not found — run unify_pairs.py first")
 
-    conn = get_lexicon()
     frozen = load_frozen_hashes()
     if frozen:
         print(f"frozen hashes loaded: {len(frozen)}")
-    report = compose_source(args.source, conn, frozen)
+
+    if args.direct_en:
+        report = compose_source_direct_en(args.source, frozen)
+    else:
+        conn = get_lexicon()
+        report = compose_source(args.source, conn, frozen)
     print(json.dumps(report, indent=2, ensure_ascii=False))
 
 
